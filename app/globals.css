@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+:root {
+  --accent: #8a7a68;
+  --text: #2b2622;
+  --panel: rgba(255, 252, 247, 0.72);
+}
+
+@theme inline {
+  --font-serif: var(--font-serif);
+  --font-sans: var(--font-sans);
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #000;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  overscroll-behavior: none;
+}
+
+.font-serif {
+  font-family: var(--font-serif), Georgia, serif;
+}
