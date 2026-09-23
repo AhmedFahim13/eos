@@ -43,3 +43,6 @@ next-env.d.ts
 
 # local try-on smoke output
 /data/smoke/
+
+# local dev config
+/.claude/
