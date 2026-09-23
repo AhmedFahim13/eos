@@ -94,12 +94,22 @@ export function makeProvider(id: ProviderId, call: Call, deps: HfDeps): Provider
 
 // Submits a job and cancels it (and closes the client's SSE stream) if `signal` aborts before
 // the job's "data" event arrives, so a timed-out visitor doesn't keep burning ZeroGPU quota.
-async function runJob(app: Client, endpoint: string, data: unknown[] | Record<string, unknown>, signal: AbortSignal): Promise<unknown> {
-  const job = app.submit(endpoint, data);
-  const onAbort = () => { job.cancel().catch(() => {}); app.close(); };
+// `all_events: true` is required — the default `events: ["data"]` on Client.connect makes
+// fire_event drop "status" events, so a ZeroGPU "stage: error" (quota, sleeping, busy…) is
+// silently swallowed and the iterator just ends, surfacing as an unclassifiable "no data event".
+export async function runJob(app: Client, endpoint: string, data: unknown[] | Record<string, unknown>, signal: AbortSignal): Promise<unknown> {
+  if (signal.aborted) {
+    app.close();
+    throw new Error("try-on timed out");
+  }
+  const job = app.submit(endpoint, data, undefined, undefined, true);
+  const onAbort = () => { job.cancel().catch(() => {}); job.return?.().catch(() => {}); app.close(); };
   signal.addEventListener("abort", onAbort, { once: true });
   try {
     for await (const event of job) {
+      if (event.type === "status" && event.stage === "error") {
+        throw new Error(typeof event.message === "string" ? event.message : JSON.stringify(event.message ?? "Space error"));
+      }
       if (event.type === "data") return event.data;
     }
     throw new Error("no data event");
@@ -114,6 +124,7 @@ const connect = (space: string, deps: HfDeps) =>
 export function ootdProvider(deps: HfDeps): Provider {
   return makeProvider("ootd", async (input, person, garment, signal) => {
     const app = await connect(SPACES.ootd, deps);
+    if (signal.aborted) { app.close(); throw new Error("try-on timed out"); }
     return runJob(app, "/process_dc", {
       vton_img: handle_file(person),
       garm_img: handle_file(garment),
@@ -129,6 +140,7 @@ export function ootdProvider(deps: HfDeps): Provider {
 export function idmProvider(deps: HfDeps): Provider {
   return makeProvider("idm", async (input, person, garment, signal) => {
     const app = await connect(SPACES.idm, deps);
+    if (signal.aborted) { app.close(); throw new Error("try-on timed out"); }
     // Inputs, in order: human (image editor), garment, description, auto-mask, auto-crop, steps, seed.
     return runJob(app, "/tryon", [
       { background: handle_file(person), layers: [], composite: null },
