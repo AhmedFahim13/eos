@@ -1,4 +1,5 @@
 // /bench — the Bangladeshi try-on benchmark, rendered from committed results.
+import Link from "next/link";
 import results from "@/public/bench/results.json";
 import gallery from "@/public/bench/gallery.json";
 import { SLOT_NOUN, type Slot } from "@/lib/catalog/slots";
@@ -17,7 +18,7 @@ export default function BenchPage() {
   const g = (gallery as unknown as GalleryItem[]).slice(0, 24);
   return (
     <main className="mx-auto max-w-3xl px-4 py-12 text-neutral-800">
-      <a href="/" className="text-xs underline">← Eos</a>
+      <Link href="/" className="text-xs underline">← Eos</Link>
       <h1 className="mt-4 font-serif text-3xl">How open try-on models handle Bangladeshi clothing</h1>
       <p className="mt-3 text-sm text-neutral-600">
         Open virtual try-on models are trained mostly on western tops and dresses. Nobody had measured them on sarees,
