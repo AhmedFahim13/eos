@@ -59,6 +59,24 @@ describe("judge", () => {
     const good = measure(input, person(RED), piece);
     const bad = measure(input, person([40, 70, 190]), piece);
     expect(decide(good).score).toBeGreaterThan(decide(bad).score);
-    expect(decide(bad, { colorDeltaE: 200, headSimilarity: 0, minChange: 0 }).pass).toBe(true);
+    expect(decide(bad, { minCoverage: 0, headSimilarity: 0, minChange: 0 }).pass).toBe(true);
+  });
+});
+
+describe("judge on a kurti rendered hip-length", () => {
+  // garmentBox("kurti") is the upper box (y 0.2-0.5); the model renders the kurti only
+  // down to hip length and puts something else below, which the old full-length box would see.
+  const kurtiPiece = { slot: "kurti" as const, colors: [{ name: "red", hex: "#c0282d" }] };
+  const hipLengthKurti = (torso: [number, number, number], below: [number, number, number]) =>
+    makePixels(W, H, (x, y) => {
+      if (y < 0.2 * H && x > 0.3 * W && x < 0.7 * W) return shade(falling(x));
+      if (y >= 0.2 * H && y < 0.5 * H && x > 0.25 * W && x < 0.75 * W) return torso;
+      if (y >= 0.5 * H && y < 0.8 * H && x > 0.25 * W && x < 0.75 * W) return below;
+      return [150, 150, 150];
+    });
+  const input = person([245, 245, 245]);
+  it("passes colour when the tagged colour only fills the upper (hip-length) box", () => {
+    const v = judge(input, hipLengthKurti(RED, [30, 60, 190]), kurtiPiece);
+    expect(v.color).toBe(true);
   });
 });

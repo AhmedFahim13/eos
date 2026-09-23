@@ -1,6 +1,6 @@
 // tests/judge/color.test.ts
 import { describe, expect, it } from "vitest";
-import { deltaE, dominantLabs, hexToLab, srgbToLab } from "@/lib/judge/color";
+import { colorCoverage, deltaE, dominantLabs, hexToLab, srgbToLab } from "@/lib/judge/color";
 import { makePixels } from "../helpers/pixels";
 
 const FULL = { x0: 0, y0: 0, x1: 1, y1: 1 };
@@ -35,5 +35,25 @@ describe("dominantLabs", () => {
     const dom = dominantLabs(px, { x0: 0, y0: 0, x1: 0.4, y1: 1 }, 2);
     expect(dom[0].share).toBeCloseTo(1, 5);
     expect(deltaE(dom[0].lab, srgbToLab(200, 20, 30))).toBeLessThan(1);
+  });
+});
+
+describe("colorCoverage", () => {
+  const RED = srgbToLab(200, 20, 30);
+  it("is ~1 when the whole box matches a target", () => {
+    const px = makePixels(40, 40, () => [200, 20, 30]);
+    expect(colorCoverage(px, FULL, [RED])).toBeCloseTo(1, 1);
+  });
+  it("is ~0.5 when half the box matches", () => {
+    const px = makePixels(40, 40, (x) => (x < 20 ? [200, 20, 30] : [30, 60, 190]));
+    expect(colorCoverage(px, FULL, [RED])).toBeCloseTo(0.5, 1);
+  });
+  it("is 0 when no pixel is near the target", () => {
+    const px = makePixels(40, 40, () => [30, 60, 190]);
+    expect(colorCoverage(px, FULL, [RED])).toBe(0);
+  });
+  it("is 0 when there are no targets", () => {
+    const px = makePixels(40, 40, () => [200, 20, 30]);
+    expect(colorCoverage(px, FULL, [])).toBe(0);
   });
 });

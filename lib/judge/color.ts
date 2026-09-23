@@ -41,6 +41,15 @@ function sampleLabs(px: Pixels, box: Box, maxSamples = 2000): Lab[] {
   return out;
 }
 
+/** Share (0..1) of pixels in the box whose Lab is within `maxDeltaE` of any target. 0 for no targets. */
+export function colorCoverage(px: Pixels, box: Box, targets: Lab[], maxDeltaE = 25): number {
+  if (targets.length === 0) return 0;
+  const pts = sampleLabs(px, box);
+  if (pts.length === 0) return 0;
+  const hits = pts.filter((p) => targets.some((t) => deltaE(p, t) <= maxDeltaE)).length;
+  return hits / pts.length;
+}
+
 /** k-means in Lab with a deterministic start (lightness quantiles); largest cluster first. */
 export function dominantLabs(px: Pixels, box: Box, k = 3, iters = 8): { lab: Lab; share: number }[] {
   const pts = sampleLabs(px, box);

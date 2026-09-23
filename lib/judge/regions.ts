@@ -8,7 +8,7 @@ export interface Box { x0: number; y0: number; x1: number; y1: number }
 export const HEAD: Box = { x0: 0.3, y0: 0.02, x1: 0.7, y1: 0.2 };
 
 export function garmentBox(slot: Slot): Box {
-  if (slot === "top") return { x0: 0.25, y0: 0.2, x1: 0.75, y1: 0.5 };
+  if (slot === "top" || slot === "kurti") return { x0: 0.25, y0: 0.2, x1: 0.75, y1: 0.5 };
   if (slot === "bottom") return { x0: 0.28, y0: 0.52, x1: 0.72, y1: 0.9 };
   return { x0: 0.25, y0: 0.22, x1: 0.75, y1: 0.8 };
 }

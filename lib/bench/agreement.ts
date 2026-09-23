@@ -10,10 +10,10 @@ export function agreement(rows: Labelled[], t: Thresholds): number {
 
 export function searchThresholds(rows: Labelled[]): Thresholds {
   let best = THRESHOLDS, bestA = -1;
-  for (let c = 10; c <= 40; c += 2) {
+  for (let c = 2; c <= 40; c += 2) {
     for (let h = 50; h <= 95; h += 5) {
       for (let m = 0; m <= 20; m += 2) {
-        const t = { colorDeltaE: c, headSimilarity: h / 100, minChange: m };
+        const t = { minCoverage: c / 100, headSimilarity: h / 100, minChange: m };
         const a = agreement(rows, t);
         if (a > bestA) { best = t; bestA = a; }
       }

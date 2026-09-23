@@ -23,7 +23,7 @@ const prov = (id: ProviderId, ...results: WithoutProvider<TryOnResult>[]): Provi
   return { id, run };
 };
 const verdict = (pass: boolean, score: number, over: Partial<Verdict> = {}): Verdict => ({
-  pass, color: pass, person: true, changed: true, score, metrics: { colorDeltaE: 0, headSimilarity: 1, change: 10 }, ...over,
+  pass, color: pass, person: true, changed: true, score, metrics: { colorCoverage: 1, headSimilarity: 1, change: 10 }, ...over,
 });
 const deps = (ootd: Provider, idm: Provider, judge: FitDeps["judge"]): FitDeps => ({
   providers: { ootd, idm, fal: undefined }, orderFor: () => ["ootd", "idm"], judge,

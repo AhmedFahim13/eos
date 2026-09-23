@@ -43,14 +43,14 @@ describe("benchReady", () => {
   });
 });
 
-const row = (provider: "ootd" | "idm", slot: Slot, ok: boolean, colorDeltaE = 5): BenchRow => ({
+const row = (provider: "ootd" | "idm", slot: Slot, ok: boolean, colorCoverage = 0.5): BenchRow => ({
   key: Math.random().toString(), person: "p", piece: "x", slot, provider, ok, seconds: 1,
-  ...(ok ? { metrics: { colorDeltaE, headSimilarity: 0.9, change: 20 }, image: "/i.jpg" } : { reason: "error", detail: "d" }),
+  ...(ok ? { metrics: { colorCoverage, headSimilarity: 0.9, change: 20 }, image: "/i.jpg" } : { reason: "error", detail: "d" }),
 });
 
 describe("aggregate", () => {
   it("counts generation and pass rates per provider and slot", () => {
-    const t = aggregate([row("ootd", "saree", true), row("ootd", "saree", true, 50), row("ootd", "saree", false), row("idm", "top", true)]);
+    const t = aggregate([row("ootd", "saree", true), row("ootd", "saree", true, 0.02), row("ootd", "saree", false), row("idm", "top", true)]);
     const s = t.find((x) => x.provider === "ootd" && x.slot === "saree")!;
     expect(s).toMatchObject({ attempts: 3, generated: 2, passed: 1 });
     expect(s.passRate).toBeCloseTo(0.5);
@@ -60,12 +60,12 @@ describe("aggregate", () => {
 
 describe("agreement", () => {
   const labelled = [
-    { metrics: { colorDeltaE: 5, headSimilarity: 0.9, change: 20 }, good: true },
-    { metrics: { colorDeltaE: 35, headSimilarity: 0.9, change: 20 }, good: false },
-    { metrics: { colorDeltaE: 25, headSimilarity: 0.9, change: 20 }, good: true },
+    { metrics: { colorCoverage: 0.5, headSimilarity: 0.9, change: 20 }, good: true },
+    { metrics: { colorCoverage: 0.02, headSimilarity: 0.9, change: 20 }, good: false },
+    { metrics: { colorCoverage: 0.05, headSimilarity: 0.9, change: 20 }, good: true },
   ];
   it("measures how often the judge matches people", () => {
-    expect(agreement(labelled, { colorDeltaE: 20, headSimilarity: 0.75, minChange: 8 })).toBeCloseTo(2 / 3);
+    expect(agreement(labelled, { minCoverage: 0.1, headSimilarity: 0.75, minChange: 8 })).toBeCloseTo(2 / 3);
   });
   it("finds thresholds that agree better", () => {
     const t = searchThresholds(labelled);
