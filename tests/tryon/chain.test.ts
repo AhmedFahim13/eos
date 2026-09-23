@@ -4,7 +4,11 @@ import { providerOrder, runChain, outOfCapacity } from "@/lib/tryon/chain";
 import type { Provider, ProviderId, TryOnInput, TryOnResult } from "@/lib/tryon/types";
 
 const input: TryOnInput = { person: "data:image/jpeg;base64,x", garment: "https://g", slot: "saree", description: "red saree" };
-const fake = (id: ProviderId, r: Omit<TryOnResult, "provider">): Provider => ({
+// Plain `Omit<TryOnResult, "provider">` doesn't distribute over the union (TryOnResult's
+// discriminated variants collapse to their common keys before "provider" is subtracted), so it
+// drops `reason`/`detail`/`image`. This conditional type distributes over T instead.
+type WithoutProvider<T> = T extends { provider: ProviderId } ? Omit<T, "provider"> : never;
+const fake = (id: ProviderId, r: WithoutProvider<TryOnResult>): Provider => ({
   id, run: vi.fn().mockResolvedValue({ ...r, provider: id } as TryOnResult),
 });
 
