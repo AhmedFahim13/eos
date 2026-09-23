@@ -50,6 +50,11 @@ describe("judge", () => {
     const v = judge(input, person(RED, rising), piece);
     expect(v.person).toBe(false);
   });
+  it("passes when the garment matches a non-first tagged colour", () => {
+    const twoTone = { slot: "saree" as const, colors: [{ name: "blue", hex: "#2f5fb3" }, { name: "red", hex: "#c0282d" }] };
+    const v = judge(input, person(RED), twoTone);
+    expect(v).toMatchObject({ pass: true, color: true });
+  });
   it("decide applies thresholds to stored metrics and scores higher for better results", () => {
     const good = measure(input, person(RED), piece);
     const bad = measure(input, person([40, 70, 190]), piece);

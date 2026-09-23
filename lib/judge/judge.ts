@@ -23,9 +23,9 @@ export interface Verdict {
 
 export function measure(input: Pixels, result: Pixels, piece: Pick<Piece, "slot" | "colors">): Metrics {
   const box = garmentBox(piece.slot);
-  const target = hexToLab(piece.colors[0]?.hex ?? "#808080");
+  const targets = piece.colors.length ? piece.colors.map((c) => hexToLab(c.hex)) : [hexToLab("#808080")];
   const dom = dominantLabs(result, box, 3).filter((c) => c.share >= 0.15);
-  const colorDeltaE = dom.length ? Math.min(...dom.map((c) => deltaE(c.lab, target))) : 100;
+  const colorDeltaE = dom.length ? Math.min(...dom.flatMap((c) => targets.map((t) => deltaE(c.lab, t)))) : 100;
   const headSimilarity = hashSimilarity(dHash(input, HEAD), dHash(result, HEAD));
   const a = labGrid(input, box, 16, 20), b = labGrid(result, box, 16, 20);
   const change = a.reduce((s, l, i) => s + deltaE(l, b[i]), 0) / a.length;
