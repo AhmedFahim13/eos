@@ -14,7 +14,6 @@ export interface RawPiece {
 export const SOURCES: FeedSource[] = [
   { brand: "Yellow", domain: "yellowclothing.net", kind: "shopify" },
   { brand: "Twelve", domain: "twelvebd.com", kind: "shopify" },
-  { brand: "Dorjibari", domain: "dorjibari.com.bd", kind: "shopify" },
   { brand: "Kay Kraft", domain: "www.kaykraft.com", kind: "woo" },
 ];
 
