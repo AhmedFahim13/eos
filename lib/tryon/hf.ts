@@ -15,7 +15,7 @@ export interface HfDeps {
   timeoutMs?: number;
 }
 
-type Call = (input: TryOnInput, person: Blob, garment: Blob) => Promise<unknown>;
+type Call = (input: TryOnInput, person: Blob, garment: Blob, signal: AbortSignal) => Promise<unknown>;
 
 export function ootdCategory(slot: Slot): "Dress" | "Upper-body" | "Lower-body" {
   if (slot === "top" || slot === "kurti") return "Upper-body";
@@ -31,8 +31,8 @@ export function errMsg(e: unknown): string {
 
 export function classifyError(e: unknown): "quota" | "unavailable" | "error" {
   const m = errMsg(e);
-  if (/quota|exceeded your gpu|zerogpu/i.test(m)) return "quota";
-  if (/paused|sleeping|building|not found|503|timed out|timeout/i.test(m)) return "unavailable";
+  if (/exceeded your gpu quota|gpu quota|quota exceeded/i.test(m)) return "quota";
+  if (/paused|sleeping|building|currently busy|no gpu was available|503|timed out|timeout|could not resolve app config|space.*not found|failed to fetch/i.test(m)) return "unavailable";
   return "error";
 }
 
@@ -56,10 +56,18 @@ export function firstImageUrl(data: unknown): string | null {
   return null;
 }
 
-function withTimeout<T>(p: Promise<T>, ms: number): Promise<T> {
+// Races a promise against an AbortSignal, rejecting with a timeout error when it fires. The
+// signal is also handed to `call` so it can cancel the underlying HF job instead of leaving it
+// running (and burning the visitor's GPU quota) after we've stopped waiting for it.
+function raceAbort<T>(p: Promise<T>, signal: AbortSignal): Promise<T> {
   return new Promise((resolve, reject) => {
-    const t = setTimeout(() => reject(new Error("try-on timed out")), ms);
-    p.then((v) => { clearTimeout(t); resolve(v); }, (e) => { clearTimeout(t); reject(e); });
+    const onAbort = () => reject(new Error("try-on timed out"));
+    if (signal.aborted) return onAbort();
+    signal.addEventListener("abort", onAbort, { once: true });
+    p.then(
+      (v) => { signal.removeEventListener("abort", onAbort); resolve(v); },
+      (e) => { signal.removeEventListener("abort", onAbort); reject(e); },
+    );
   });
 }
 
@@ -67,26 +75,46 @@ export function makeProvider(id: ProviderId, call: Call, deps: HfDeps): Provider
   return {
     id,
     async run(input) {
+      const controller = new AbortController();
+      const t = setTimeout(() => controller.abort(), deps.timeoutMs ?? 120_000);
       try {
         const [person, garment] = await Promise.all([deps.loadImage(input.person), deps.loadImage(input.garment)]);
-        const data = await withTimeout(call(input, person, garment), deps.timeoutMs ?? 120_000);
+        const data = await raceAbort(call(input, person, garment, controller.signal), controller.signal);
         const url = firstImageUrl(data);
         if (!url) return { ok: false, provider: id, reason: "error", detail: "no image in response" };
         return { ok: true, provider: id, image: await deps.fetchResult(url) };
       } catch (e) {
         return { ok: false, provider: id, reason: classifyError(e), detail: errMsg(e).slice(0, 200) };
+      } finally {
+        clearTimeout(t);
       }
     },
   };
+}
+
+// Submits a job and cancels it (and closes the client's SSE stream) if `signal` aborts before
+// the job's "data" event arrives, so a timed-out visitor doesn't keep burning ZeroGPU quota.
+async function runJob(app: Client, endpoint: string, data: unknown[] | Record<string, unknown>, signal: AbortSignal): Promise<unknown> {
+  const job = app.submit(endpoint, data);
+  const onAbort = () => { job.cancel().catch(() => {}); app.close(); };
+  signal.addEventListener("abort", onAbort, { once: true });
+  try {
+    for await (const event of job) {
+      if (event.type === "data") return event.data;
+    }
+    throw new Error("no data event");
+  } finally {
+    signal.removeEventListener("abort", onAbort);
+  }
 }
 
 const connect = (space: string, deps: HfDeps) =>
   Client.connect(space, deps.hfToken ? { hf_token: deps.hfToken as `hf_${string}` } : {});
 
 export function ootdProvider(deps: HfDeps): Provider {
-  return makeProvider("ootd", async (input, person, garment) => {
+  return makeProvider("ootd", async (input, person, garment, signal) => {
     const app = await connect(SPACES.ootd, deps);
-    const r = await app.predict("/process_dc", {
+    return runJob(app, "/process_dc", {
       vton_img: handle_file(person),
       garm_img: handle_file(garment),
       category: ootdCategory(input.slot),
@@ -94,16 +122,15 @@ export function ootdProvider(deps: HfDeps): Provider {
       n_steps: 20,
       image_scale: 2,
       seed: -1,
-    });
-    return r.data;
+    }, signal);
   }, deps);
 }
 
 export function idmProvider(deps: HfDeps): Provider {
-  return makeProvider("idm", async (input, person, garment) => {
+  return makeProvider("idm", async (input, person, garment, signal) => {
     const app = await connect(SPACES.idm, deps);
     // Inputs, in order: human (image editor), garment, description, auto-mask, auto-crop, steps, seed.
-    const r = await app.predict("/tryon", [
+    return runJob(app, "/tryon", [
       { background: handle_file(person), layers: [], composite: null },
       handle_file(garment),
       input.description,
@@ -111,7 +138,6 @@ export function idmProvider(deps: HfDeps): Provider {
       false,
       30,
       42,
-    ]);
-    return r.data;
+    ], signal);
   }, deps);
 }

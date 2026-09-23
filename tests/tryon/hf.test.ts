@@ -25,7 +25,11 @@ describe("classifyError", () => {
     expect(classifyError({ message: "ZeroGPU quota exceeded" })).toBe("quota");
     expect(classifyError(new Error("Space is sleeping"))).toBe("unavailable");
     expect(classifyError(new Error("try-on timed out"))).toBe("unavailable");
+    expect(classifyError(new Error("This application is currently busy. Please try again."))).toBe("unavailable");
+    expect(classifyError(new Error("No GPU was available after 60s"))).toBe("unavailable");
     expect(classifyError(new Error("CUDA error"))).toBe("error");
+    expect(classifyError(new Error("FileNotFoundError: model.bin not found"))).toBe("error");
+    expect(classifyError(new Error("ZeroGPU worker error"))).toBe("error");
   });
 });
 
@@ -53,5 +57,15 @@ describe("makeProvider", () => {
   it("fails when the response has no image", async () => {
     const p = makeProvider("idm", async () => [null], deps());
     await expect(p.run(input)).resolves.toMatchObject({ ok: false, reason: "error" });
+  });
+  it("aborts the signal passed to call when the timeout fires", async () => {
+    let sig: AbortSignal | undefined;
+    const p = makeProvider("ootd", (_input, _person, _garment, signal) => {
+      sig = signal;
+      return new Promise(() => {}); // never resolves — only the timeout ends the run
+    }, { ...deps(), timeoutMs: 20 });
+    const res = await p.run(input);
+    expect(res).toMatchObject({ ok: false, provider: "ootd", reason: "unavailable" });
+    expect(sig?.aborted).toBe(true);
   });
 });
