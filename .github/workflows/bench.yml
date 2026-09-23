@@ -29,6 +29,7 @@ jobs:
           git config user.name "eos-bot"
           git config user.email "eos-bot@users.noreply.github.com"
           git add data/bench public/bench docs/bench.md
+          git diff --cached --quiet -- data/bench/runs.json && exit 0
           git diff --cached --quiet && exit 0
           git commit -m "bench: daily runs"
           git pull --rebase --autostash
