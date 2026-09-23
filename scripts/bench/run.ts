@@ -2,7 +2,7 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import sharp from "sharp";
 import type { Piece } from "@/lib/catalog/types";
-import { planRuns, selectBenchPieces } from "@/lib/bench/select";
+import { benchReady, planRuns, selectBenchPieces } from "@/lib/bench/select";
 import type { BenchRow } from "@/lib/bench/aggregate";
 import { decide, measure } from "@/lib/judge/judge";
 import { loadPixelsNode } from "@/lib/judge/node";
@@ -25,7 +25,12 @@ if (people.some((p) => /REPLACE/.test(JSON.stringify(p)) || !existsSync(p.file))
 
 if (!existsSync(PIECES)) {
   const catalog: Piece[] = JSON.parse(readFileSync("public/catalog.json", "utf8"));
-  writeFileSync(PIECES, JSON.stringify(selectBenchPieces(catalog, 2), null, 2));
+  const selected = selectBenchPieces(catalog, 2);
+  if (!benchReady(selected)) {
+    console.log("::notice::Catalog not ready for the benchmark yet");
+    process.exit(0);
+  }
+  writeFileSync(PIECES, JSON.stringify(selected, null, 2));
 }
 const pieces: Piece[] = JSON.parse(readFileSync(PIECES, "utf8"));
 const byId = Object.fromEntries(pieces.map((p) => [p.id, p]));

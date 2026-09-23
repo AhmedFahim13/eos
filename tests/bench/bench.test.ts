@@ -1,6 +1,6 @@
 // tests/bench/bench.test.ts
 import { describe, expect, it } from "vitest";
-import { selectBenchPieces, planRuns } from "@/lib/bench/select";
+import { selectBenchPieces, planRuns, benchReady } from "@/lib/bench/select";
 import { aggregate, type BenchRow } from "@/lib/bench/aggregate";
 import { agreement, searchThresholds } from "@/lib/bench/agreement";
 import type { Piece } from "@/lib/catalog/types";
@@ -25,6 +25,21 @@ describe("selectBenchPieces", () => {
     const runs = planRuns(["p01", "p02"], sel);
     expect(runs).toHaveLength(2 * (10 * 2 + 2 * 1));
     expect(runs[0]).toEqual({ key: expect.stringContaining("p01|"), person: "p01", piece: expect.any(String), provider: expect.any(String) });
+  });
+});
+
+describe("benchReady", () => {
+  const pieces = ["saree", "set3", "set2", "kurti", "top", "bottom", "orna"].flatMap((s) =>
+    [1, 2, 3].map((i) => mk(`${s}-${i}`, s as Slot)));
+  it("is true when every wearable slot has 2 pieces", () => {
+    expect(benchReady(selectBenchPieces(pieces, 2))).toBe(true);
+  });
+  it("is false when a slot is missing", () => {
+    const missingBottom = pieces.filter((p) => p.slot !== "bottom");
+    expect(benchReady(selectBenchPieces(missingBottom, 2))).toBe(false);
+  });
+  it("is false when empty", () => {
+    expect(benchReady([])).toBe(false);
   });
 });
 

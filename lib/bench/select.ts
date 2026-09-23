@@ -12,6 +12,11 @@ export function selectBenchPieces(pieces: Piece[], perSlot = 2): Piece[] {
     pieces.filter((p) => p.slot === slot).sort((a, b) => h(a.id).localeCompare(h(b.id))).slice(0, perSlot));
 }
 
+/** True once selectBenchPieces(catalog, 2) covers every slot in TRYON_ORDER with 2 pieces each. */
+export function benchReady(selected: Piece[]): boolean {
+  return selected.length === TRYON_ORDER.length * 2;
+}
+
 export interface PlannedRun { key: string; person: string; piece: string; provider: ProviderId }
 
 export function planRuns(people: string[], pieces: Piece[]): PlannedRun[] {
