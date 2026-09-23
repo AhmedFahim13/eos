@@ -7,10 +7,10 @@ Runs so far: 0. Updated 2026-09-23. Live page: /bench.
 
 ## Method
 
-Five openly licensed photos of South Asian women (sources and licences in `data/bench/people.json`) × two pieces per garment type from the live catalog × each model that accepts that type. Each output is scored by the same judge that runs in the app: garment colour kept (CIELAB ΔE against the tagged colour), same person (difference hash of the head region), outfit changed (mean ΔE across the garment region).
+Five openly licensed photos of South Asian women (sources and licences in `data/bench/people.json`) × two pieces per garment type from the live catalog × each model that accepts that type. Each output is scored by the same judge that runs in the app: garment colour present (share of the garment region within CIELAB ΔE 25 of a tagged colour), same person (difference hash of the head region), outfit changed (mean ΔE across the garment region).
 
 Judge agreement with human ratings: not calibrated yet.
-Tagger accuracy: not scored yet.
+The catalog tagger chose the right garment type for 88% of 60 pieces and the right main colour for 77%, checked against labels from a second AI model (Claude, labelling blind from the product photo and name), not a person. Most misses are two-piece sets tagged as three-piece: brands sell a kameez with dupatta as a two-piece and photograph it with trousers.
 
 ## Limits
 

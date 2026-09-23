@@ -1,7 +1,34 @@
 {
-  "generatedAt": "2026-09-23T06:42:02.689Z",
+  "generatedAt": "2026-09-23T11:09:17.734Z",
   "runs": 0,
   "table": [],
   "judge": null,
-  "tagger": null
+  "tagger": {
+    "n": 60,
+    "slotAccuracy": 0.8833333333333333,
+    "colorAgreement": 0.7666666666666667,
+    "occasionPrecision": 0.5274725274725275,
+    "occasionRecall": 0.8347826086956521,
+    "confusion": {
+      "set3": {
+        "set3": 6
+      },
+      "bottom": {
+        "bottom": 11
+      },
+      "set2": {
+        "set2": 9,
+        "set3": 5
+      },
+      "kurti": {
+        "kurti": 15,
+        "set2": 1
+      },
+      "top": {
+        "top": 12,
+        "set2": 1
+      }
+    },
+    "scoredAt": "2026-09-23T11:08:55.374Z"
+  }
 }

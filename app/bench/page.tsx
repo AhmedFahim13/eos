@@ -42,7 +42,7 @@ export default function BenchPage() {
       <ul className="mt-6 space-y-1 text-xs text-neutral-500">
         <li>{r.runs} runs{r.generatedAt ? `, updated ${r.generatedAt.slice(0, 10)}` : ""}.</li>
         <li>{r.judge ? `The judge agreed with a human rating on ${pct(r.judge.test)} of held-out outputs (${r.judge.n} rated).` : "Judge agreement with human ratings: not calibrated yet."}</li>
-        <li>{r.tagger ? `Catalog tagger: right garment type ${pct(r.tagger.slotAccuracy)}, right main colour ${pct(r.tagger.colorAgreement)} (${r.tagger.n} hand-labelled pieces).` : "Tagger accuracy: not scored yet."}</li>
+        <li>{r.tagger ? `Catalog tagger: right garment type ${pct(r.tagger.slotAccuracy)}, right main colour ${pct(r.tagger.colorAgreement)} (checked against ${r.tagger.n} pieces labelled by a second AI model, Claude, not a person).` : "Tagger accuracy: not scored yet."}</li>
       </ul>
       {g.length > 0 && (
         <div className="mt-8 grid grid-cols-3 gap-2 sm:grid-cols-4">

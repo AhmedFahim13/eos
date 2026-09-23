@@ -1,4 +1,4 @@
-// lib/build/tagEval.ts — how often the vision tagger agrees with Fahim's hand labels.
+// lib/build/tagEval.ts — how often the vision tagger agrees with reference labels (data/labels/tags-gold.json).
 import type { Slot } from "@/lib/catalog/slots";
 import type { Occasion } from "@/lib/catalog/types";
 import type { Tag } from "./tags";
