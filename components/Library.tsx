@@ -3,7 +3,7 @@ import { useEffect, useMemo } from "react";
 import { useCatalog, imgUrl } from "@/lib/catalog";
 import { usePhoto } from "@/lib/photostore";
 
-// A cheap 32-bit FNV-1a-style hash used only to give the library a fixed, mixed-looking order
+// A cheap 32-bit multiplicative (×31) hash used only to give the library a fixed, mixed-looking order
 // (deterministic, so it stays pure inside useMemo — no Math.random()).
 function hash(id: string): number {
   let h = 0;
