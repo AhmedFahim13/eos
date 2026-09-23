@@ -2,7 +2,7 @@
 // the deterministic outfit Board, saved looks. No AI generation.
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
-import { useCatalog, type CatSlot } from "./catalog";
+import { useCatalog, displaced, type CatSlot } from "./catalog";
 
 export type ViewMode = "photo" | "library" | "3d";
 
@@ -39,7 +39,7 @@ export const usePhoto = create<PhotoState>()(
       viewMode: "photo",
       equipped: {},
       active: null,
-      tab: "dress",
+      tab: "saree",
       query: "",
       savedLooks: [],
 
@@ -56,14 +56,8 @@ export const usePhoto = create<PhotoState>()(
           set({ equipped: eq, active: null });
           return;
         }
+        for (const s of displaced(p.slot)) delete eq[s];
         eq[p.slot] = id;
-        // A dress and separates are mutually exclusive.
-        if (p.slot === "dress") {
-          delete eq.top;
-          delete eq.bottom;
-        } else if (p.slot === "top" || p.slot === "bottom") {
-          delete eq.dress;
-        }
         set({ equipped: eq, active: id });
       },
 
@@ -82,6 +76,8 @@ export const usePhoto = create<PhotoState>()(
     }),
     {
       name: "eos-photo",
+      version: 2,
+      migrate: () => ({ equipped: {}, savedLooks: [], viewMode: "photo" as ViewMode }),
       skipHydration: true,
       storage: createJSONStorage(() => (typeof window !== "undefined" ? window.localStorage : noopStorage)),
       partialize: (s) => ({ equipped: s.equipped, savedLooks: s.savedLooks, viewMode: s.viewMode }),

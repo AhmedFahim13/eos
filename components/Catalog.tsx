@@ -55,7 +55,10 @@ export function Catalog() {
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={imgUrl(p.image)} alt={p.name} loading="lazy" className="max-h-full max-w-full object-contain" />
                 </div>
-                <span className="block truncate bg-white/70 px-1.5 py-1 text-[10px] font-medium tracking-wide text-neutral-700">{p.name}</span>
+                <span className="block truncate bg-white/70 px-1.5 pt-1 text-[10px] font-medium tracking-wide text-neutral-700">{p.name}</span>
+                <span className="block truncate bg-white/70 px-1.5 pb-1 text-[9px] tracking-wide text-neutral-500">
+                  {p.brand}{p.price ? ` · ৳${p.price.toLocaleString("en-IN")}` : ""}
+                </span>
                 {on && (
                   <span className="absolute right-1 top-1 rounded-full px-1.5 py-0.5 text-[9px] text-white" style={{ background: "var(--accent)" }}>✓</span>
                 )}

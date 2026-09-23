@@ -3,6 +3,14 @@ import { useEffect, useMemo } from "react";
 import { useCatalog, imgUrl } from "@/lib/catalog";
 import { usePhoto } from "@/lib/photostore";
 
+// A cheap 32-bit FNV-1a-style hash used only to give the library a fixed, mixed-looking order
+// (deterministic, so it stays pure inside useMemo — no Math.random()).
+function hash(id: string): number {
+  let h = 0;
+  for (let i = 0; i < id.length; i++) h = (Math.imul(h, 31) + id.charCodeAt(i)) | 0;
+  return h;
+}
+
 // A full-bleed masonry montage of real brand lookbook shots — a fashion wall.
 export function Library() {
   const { pieces, status, load } = useCatalog();
@@ -10,9 +18,7 @@ export function Library() {
   useEffect(() => { load(); }, [load]);
 
   const shown = useMemo(() => {
-    const a = [...pieces];
-    for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
-    return a.slice(0, 120);
+    return [...pieces].sort((a, b) => hash(a.id) - hash(b.id)).slice(0, 120);
   }, [pieces]);
 
   return (

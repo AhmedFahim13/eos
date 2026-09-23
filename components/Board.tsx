@@ -1,11 +1,11 @@
 "use client";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useCatalog, SLOT_TINT, imgUrl, type CatSlot } from "@/lib/catalog";
+import { useCatalog, SLOT_TINT, imgUrl, TRYON_ORDER, EXTRAS, type CatSlot } from "@/lib/catalog";
 import { usePhoto } from "@/lib/photostore";
 
-const MAIN: CatSlot[] = ["dress", "top", "bottom", "outer"];
-const EXTRA: CatSlot[] = ["shoes", "bag", "accessory"];
+const MAIN: CatSlot[] = TRYON_ORDER;
+const EXTRA: CatSlot[] = EXTRAS;
 
 const toData = (f: File) => new Promise<string>((r) => { const fr = new FileReader(); fr.onload = () => r(fr.result as string); fr.readAsDataURL(f); });
 const resize = (u: string, max = 1024) => new Promise<string>((r) => { const i = new Image(); i.onload = () => { const s = Math.min(1, max / Math.max(i.width, i.height)); const c = document.createElement("canvas"); c.width = i.width * s; c.height = i.height * s; c.getContext("2d")!.drawImage(i, 0, 0, c.width, c.height); r(c.toDataURL("image/jpeg", 0.9)); }; i.src = u; });
