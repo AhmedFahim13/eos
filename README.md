@@ -14,11 +14,13 @@ Live: https://eos-93xe.vercel.app · Benchmark: https://eos-93xe.vercel.app/benc
    cached, so a piece is never tagged twice. Every piece links back to the brand.
 2. **Try-on.** Your browser sends your photo and the piece straight to open try-on models on
    Hugging Face (OOTDiffusion for full-length pieces, IDM-VTON for tops). Each visitor uses their
-   own free GPU allowance, and Eos never sees or stores the photo.
+   own free GPU allowance, and Eos never sees or stores the photo. If those Spaces are busy and
+   the optional paid fallback (fal.ai) is enabled, a photo may instead be sent through Eos's
+   server to fal.ai for that one try-on; it is not stored there either.
 3. **Judge.** Every result is checked before you see it: is the garment's colour kept, is it
    still you, did the outfit actually change. A miss is retried once on the other model; if both
    miss, you get the better one with a plain note instead of a silently wrong picture.
-4. **Benchmark.** The same judge scores a fixed set of benchmark models and pieces every day.
+4. **Benchmark.** The same judge scores a fixed set of benchmark photos every day.
    The result, how well open try-on models handle Bangladeshi clothing, is at `/bench`.
 5. **Stylist.** Pick an occasion (Eid, wedding, gaye holud, office…) and an optional budget; one
    model call picks three pieces from a rule-narrowed shortlist and says why. If the free quota
@@ -30,8 +32,9 @@ Live: https://eos-93xe.vercel.app · Benchmark: https://eos-93xe.vercel.app/benc
   stylist makes one call per request over about 30 candidates, never the whole catalog.
 - **Try-on from the browser.** A server calling Hugging Face with one token would give the whole
   site about 3.5 GPU minutes a day. Calling from the browser gives every visitor their own.
-- **Measure, then show.** The judge's thresholds are fitted to human ratings and its agreement
-  is published next to the benchmark, as is the tagger's accuracy.
+- **Measure, then show.** The judge's thresholds will be fitted to human ratings once the
+  benchmark has run, and the agreement is published next to the results, as is the tagger's
+  accuracy.
 - **Rejected:** calling an LLM on every click (burns the free quota in an afternoon); running
   models in the browser (a 1–2 GB download, weak on phones and on Bangladeshi occasions).
 - **Not built:** menswear (Dorjibari is menswear only, so it was dropped from the catalog),
@@ -54,7 +57,9 @@ Benchmark: `npm run bench:run`, `npm run bench:report`, `npm run bench:calibrate
 
 Product data comes only from the brands' public feeds, for a non-commercial demo, with every
 piece linked to the brand's own page. A brand can ask for removal at any time. Uploaded photos go
-directly from the visitor's browser to Hugging Face and are never stored by Eos. Benchmark photos
-are openly licensed; sources and credits are in `data/bench/people.json`.
+directly from the visitor's browser to Hugging Face and are never stored by Eos. If the optional
+paid fallback (fal.ai) is enabled, a photo may instead pass through Eos's server to fal.ai for
+that one try-on; it is not stored by either. Benchmark photos are openly licensed; sources and
+credits are in `data/bench/people.json`.
 
 The 3D atelier (moods, procedural garments, prints) is still in the app under the 3D tab.

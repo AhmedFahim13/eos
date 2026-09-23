@@ -120,7 +120,7 @@ export function Board() {
               </label>
               <button onClick={onSample} className="mt-1.5 w-full text-center text-[11px] underline opacity-70" style={{ color: "var(--text)" }}>or try it on a sample model</button>
               <p className="mt-1.5 text-center text-[10px] opacity-50" style={{ color: "var(--text)" }}>
-                Your photo goes straight from your browser to open try-on models on Hugging Face. Eos never stores it.
+                Your photo goes straight from your browser to open try-on models on Hugging Face (or, if they&apos;re busy, our paid fallback). Eos never stores it.
               </p>
             </>)}
             <div className="mt-2 flex gap-2">
