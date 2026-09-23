@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useCatalog, imgUrl, TRYON_ORDER, OCCASIONS, OCCASION_LABEL, type Occasion } from "@/lib/catalog";
 import { usePhoto } from "@/lib/photostore";
+import { useBroken } from "@/lib/brokenImages";
 
 interface Result { suggestions: { id: string; reason: string }[]; source: "ai" | "rules" }
 
@@ -13,6 +14,7 @@ export function Stylist() {
   const [res, setRes] = useState<Result | null>(null);
   const byId = useCatalog((s) => s.byId);
   const { equipped, pick } = usePhoto();
+  const { broken, mark } = useBroken();
   const outfitId = TRYON_ORDER.map((s) => equipped[s]).find(Boolean);
   const panel = { background: "var(--panel)", color: "var(--text)" } as const;
 
@@ -66,14 +68,14 @@ export function Stylist() {
       {state === "error" && <p className="py-4 text-center text-xs opacity-60">Couldn&apos;t get suggestions. Please try again.</p>}
       {state === "done" && res && (
         <div className="max-h-[40vh] space-y-2 overflow-y-auto">
-          {res.suggestions.length === 0 && <p className="py-2 text-center text-xs opacity-60">Nothing matches. Try another occasion or budget.</p>}
-          {res.suggestions.map((s) => {
+          {res.suggestions.filter((s) => !broken[s.id]).length === 0 && <p className="py-2 text-center text-xs opacity-60">Nothing matches. Try another occasion or budget.</p>}
+          {res.suggestions.filter((s) => !broken[s.id]).map((s) => {
             const p = byId[s.id];
             if (!p) return null;
             return (
               <div key={s.id} className="flex gap-2 rounded-xl p-1.5" style={{ background: "rgba(128,128,128,0.08)" }}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={imgUrl(p.image)} alt={p.name} className="h-16 w-12 rounded-lg object-cover" />
+                <img src={imgUrl(p.image)} alt={p.name} onError={() => mark(s.id)} className="h-16 w-12 rounded-lg object-cover" />
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-[11px] font-medium">{p.name}</p>
                   <p className="text-[10px] opacity-70">{s.reason}</p>

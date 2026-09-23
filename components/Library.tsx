@@ -2,6 +2,7 @@
 import { useEffect, useMemo } from "react";
 import { useCatalog, imgUrl } from "@/lib/catalog";
 import { usePhoto } from "@/lib/photostore";
+import { useBroken } from "@/lib/brokenImages";
 
 // A cheap 32-bit multiplicative (×31) hash used only to give the library a fixed, mixed-looking order
 // (deterministic, so it stays pure inside useMemo — no Math.random()).
@@ -15,11 +16,12 @@ function hash(id: string): number {
 export function Library() {
   const { pieces, status, load } = useCatalog();
   const { pick, setViewMode } = usePhoto();
+  const { broken, mark } = useBroken();
   useEffect(() => { load(); }, [load]);
 
   const shown = useMemo(() => {
-    return [...pieces].sort((a, b) => hash(a.id) - hash(b.id)).slice(0, 120);
-  }, [pieces]);
+    return [...pieces].filter((p) => !broken[p.id]).sort((a, b) => hash(a.id) - hash(b.id)).slice(0, 120);
+  }, [pieces, broken]);
 
   return (
     <div className="pointer-events-auto absolute inset-0 overflow-y-auto px-3 pb-24 pt-20 md:px-8">
@@ -27,7 +29,7 @@ export function Library() {
         {shown.map((p) => (
           <button key={p.id} onClick={() => { pick(p.id); setViewMode("photo"); }} className="mb-2 block w-full overflow-hidden rounded-xl bg-white/40 shadow-sm transition hover:opacity-90">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={imgUrl(p.image)} alt={p.name} loading="lazy" className="w-full" />
+            <img src={imgUrl(p.image)} alt={p.name} loading="lazy" onError={() => mark(p.id)} className="w-full" />
           </button>
         ))}
         {status !== "ready" && <p className="col-span-full py-10 text-center text-xs opacity-50" style={{ color: "var(--text)" }}>Loading library…</p>}
