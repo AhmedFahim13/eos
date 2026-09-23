@@ -29,4 +29,13 @@ describe("generateJSON", () => {
     await expect(generateJSON({ parts: [], schema: {} })).rejects.toThrow(/GEMINI_API_KEY/);
     if (saved !== undefined) process.env.GEMINI_API_KEY = saved;
   });
+  it("falls back to the default model when GEMINI_TEXT_MODEL is empty", async () => {
+    const saved = process.env.GEMINI_TEXT_MODEL;
+    process.env.GEMINI_TEXT_MODEL = "";
+    const f = vi.fn().mockResolvedValue(ok('{"a":1}'));
+    await generateJSON({ parts: [], schema: {}, apiKey: "k", fetchImpl: f });
+    expect(f.mock.calls[0][0]).toContain("gemini-flash-lite-latest");
+    if (saved === undefined) delete process.env.GEMINI_TEXT_MODEL;
+    else process.env.GEMINI_TEXT_MODEL = saved;
+  });
 });

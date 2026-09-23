@@ -15,7 +15,7 @@ export interface GenerateOptions {
 export async function generateJSON<T>(opts: GenerateOptions): Promise<T> {
   const key = opts.apiKey ?? process.env.GEMINI_API_KEY;
   if (!key) throw new Error("GEMINI_API_KEY is not set");
-  const model = opts.model ?? process.env.GEMINI_TEXT_MODEL ?? "gemini-flash-lite-latest";
+  const model = opts.model || process.env.GEMINI_TEXT_MODEL || "gemini-flash-lite-latest";
   const f = opts.fetchImpl ?? fetch;
   const res = await f(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
     method: "POST",
