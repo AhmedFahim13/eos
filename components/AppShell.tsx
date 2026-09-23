@@ -5,6 +5,7 @@ import { Wardrobe } from "./Wardrobe";
 import { Catalog } from "./Catalog";
 import { Board } from "./Board";
 import { Library } from "./Library";
+import { Stylist } from "./Stylist";
 import { MoodSwitcher } from "./MoodSwitcher";
 
 const TABS = [{ m: "photo", l: "Board" }, { m: "library", l: "Library" }, { m: "3d", l: "3D" }] as const;
@@ -13,7 +14,7 @@ export function AppShell() {
   const { viewMode, setViewMode } = usePhoto();
   return (
     <>
-      {viewMode === "photo" && (<><Board /><Catalog /></>)}
+      {viewMode === "photo" && (<><Board /><Catalog /><Stylist /></>)}
       {viewMode === "library" && <Library />}
       {viewMode === "3d" && (<><div className="absolute inset-0"><Scene /></div><Wardrobe /></>)}
       <MoodSwitcher />
