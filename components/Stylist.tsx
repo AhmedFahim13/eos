@@ -1,10 +1,13 @@
 "use client";
 import { useState } from "react";
-import { useCatalog, imgUrl, TRYON_ORDER, OCCASIONS, OCCASION_LABEL, type Occasion } from "@/lib/catalog";
+import { useCatalog, imgUrl, OCCASIONS, OCCASION_LABEL, type Occasion } from "@/lib/catalog";
 import { usePhoto } from "@/lib/photostore";
 import { useBroken } from "@/lib/brokenImages";
 
 interface Result { suggestions: { id: string; reason: string }[]; source: "ai" | "rules" }
+
+// Outer garment first: what "completes the look" anchors on, not try-on order (which fits the bottom first).
+const ANCHOR_ORDER = ["saree", "set3", "set2", "kurti", "top", "bottom"] as const;
 
 export function Stylist() {
   const [open, setOpen] = useState(false);
@@ -15,7 +18,7 @@ export function Stylist() {
   const byId = useCatalog((s) => s.byId);
   const { equipped, pick } = usePhoto();
   const { broken, mark } = useBroken();
-  const outfitId = TRYON_ORDER.map((s) => equipped[s]).find(Boolean);
+  const outfitId = ANCHOR_ORDER.map((s) => equipped[s]).find(Boolean);
   const panel = { background: "var(--panel)", color: "var(--text)" } as const;
 
   async function ask(anchorId?: string) {
