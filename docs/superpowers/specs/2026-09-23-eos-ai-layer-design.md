@@ -193,7 +193,32 @@ accessory the same way.
 Photo-to-wardrobe. Menswear. Scraping brands without a feed. Changes to the 3D room. A pose
 or segmentation model in the judge. Accounts, payments, storing any photo.
 
-## 9. Open risks
+## 9. Revisions found while planning (2026-09-23)
+
+These override the sections above where they conflict.
+
+1. **Kolors is dropped.** Its Space hides the try-on endpoint from the API (`show_api` off), so
+   the chain is OOTDiffusion (`/process_dc`, category Dress, Upper-body or Lower-body) and
+   IDM-VTON (`/tryon`), then fal. IDM-VTON is upper-body only, so bottoms go to OOTDiffusion
+   alone.
+2. **Try-on runs from the browser, not the server.** ZeroGPU gives a free account about 3.5 GPU
+   minutes a day and an anonymous visitor about 2 minutes, per IP. A server route with
+   Fahim's token would give the whole site about ten try-ons a day. The browser calls the
+   Spaces directly with `@gradio/client`, so each visitor spends their own anonymous quota
+   and the photo never passes through Eos's server. The server keeps two small routes: fal
+   (only when `FAL_KEY` is set, with the per-IP limit) and a no-store proxy that fetches result
+   images from `*.hf.space` so the judge can read their pixels.
+3. **The benchmark is smaller.** 5 people × 12 pieces (2 per wearable slot: saree, 3-piece,
+   2-piece, kurti, top, bottom) × 2 models = 120 runs. Ornas and accessories are not tried on.
+   A daily GitHub Action with Fahim's `HF_TOKEN` runs up to 12 a day, resumes, and stops on
+   quota, so it completes in about ten days. Fahim rates every generated output, not 80.
+4. **The quota fallback shows benchmark examples,** not the chosen piece, since only 12 pieces
+   are in the benchmark.
+5. **`components/Photoreal.tsx` and `lib/describe.ts` are removed.** Nothing mounts
+   `Photoreal`, so "Render my look" was already unreachable; the route rewrite would otherwise
+   leave dead callers.
+
+## 10. Open risks
 
 - ZeroGPU quota may be tighter than expected. Mitigation: the benchmark runs across days; the
   demo gallery covers live exhaustion.
