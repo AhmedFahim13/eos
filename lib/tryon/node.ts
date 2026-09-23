@@ -23,7 +23,13 @@ export function nodeDeps(hfToken?: string): HfDeps {
       return res.blob();
     },
     async fetchResult(url) {
-      const res = await fetch(url, { headers: hfToken ? { Authorization: `Bearer ${hfToken}` } : {} });
+      // Only send the HF token to the space we submitted the job to — never to an arbitrary
+      // redirect target, which would leak it.
+      let sendToken = false;
+      if (hfToken) {
+        try { const u = new URL(url); sendToken = u.protocol === "https:" && u.hostname.endsWith(".hf.space"); } catch { sendToken = false; }
+      }
+      const res = await fetch(url, { headers: sendToken ? { Authorization: `Bearer ${hfToken}` } : {} });
       if (!res.ok) throw new Error(`result ${res.status}`);
       const ct = res.headers.get("content-type")?.startsWith("image/") ? res.headers.get("content-type")! : "image/png";
       return `data:${ct};base64,${Buffer.from(await res.arrayBuffer()).toString("base64")}`;

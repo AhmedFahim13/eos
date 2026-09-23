@@ -24,6 +24,9 @@ export async function POST(req: NextRequest) {
   if (!person?.startsWith("data:image/") || !garment?.startsWith("https://") || !SLOT_VALUES.includes(slot as Slot) || !isWearable(slot as Slot)) {
     return NextResponse.json({ error: "bad_request" }, { status: 400 });
   }
+  if (person.length > 8_000_000) {
+    return NextResponse.json({ error: "too_large" }, { status: 413 });
+  }
 
   const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "anon";
   if (!limiter(ip)) {
@@ -45,6 +48,7 @@ export async function POST(req: NextRequest) {
     const url: string | undefined = j?.image?.url || j?.images?.[0]?.url;
     if (!url) return NextResponse.json({ error: "no_output" }, { status: 502 });
     const img = await fetch(url);
+    if (!img.ok) return NextResponse.json({ error: "no_output" }, { status: 502 });
     const ct = img.headers.get("content-type") || "image/png";
     const b64 = Buffer.from(await img.arrayBuffer()).toString("base64");
     return NextResponse.json({ image: `data:${ct};base64,${b64}` });
