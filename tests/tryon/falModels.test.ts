@@ -12,6 +12,12 @@ describe("bananaPrompt", () => {
     expect(p).toContain("face");
     expect(p).toContain("folded, on a hanger or on a mannequin");
   });
+  it("lets the product photo decide how much of the outfit changes", () => {
+    const p = bananaPrompt({ slot: "bottom", description: "blue swim short", styles: [] });
+    expect(p).toContain("complete look");
+    expect(p).toContain("replace only that garment");
+    expect(p).not.toContain("keep the person's own top");
+  });
   it("keeps a kurti full length", () => {
     expect(bananaPrompt({ slot: "kurti", description: "green kurti", styles: [] })).toContain("full length");
   });
@@ -26,7 +32,8 @@ describe("falRequest", () => {
   it("keeps the FASHN request as before", () => {
     const r = falRequest("fashn", "P", "G", { slot: "kurti", description: "", styles: [] });
     expect(r.url).toContain("fashn/tryon/v1.6");
-    expect(r.body).toMatchObject({ model_image: "P", garment_image: "G", category: "tops" });
+    expect(r.body).toMatchObject({ model_image: "P", garment_image: "G", category: "auto" });
+    expect(falRequest("fashn", "P", "G", saree).body).toMatchObject({ category: "one-pieces" });
   });
 });
 

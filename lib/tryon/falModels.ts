@@ -17,16 +17,22 @@ const HOW_WORN: Partial<Record<Slot, string>> = {
   saree: "Drape the saree in the Nivi style with the pallu over the left shoulder, reaching the feet, with the matching blouse shown in the product photo.",
   set3: "Dress the person in all three pieces as shown: the kameez, the matching bottom and the dupatta or orna.",
   set2: "Dress the person in both pieces as shown: the kameez or top and the matching bottom.",
-  kurti: "Keep the kurti's full length as in the product photo; it is a long tunic, not a short top. Keep the person's own bottom wear.",
-  top: "Replace only the upper-body garment; keep the person's own bottom wear.",
-  bottom: "Replace only the bottom wear; keep the person's own top.",
+  kurti: "Keep the kurti's full length as in the product photo; it is a long tunic, not a short top.",
 };
+
+// What the product photo shows decides how much of the outfit changes, not the product's tag: a pair of
+// jeans on its own changes only the jeans, but jeans styled with a T-shirt, a dress or a swimsuit shown as
+// a set changes the whole outfit. Otherwise half the person's own clothes stay (half a saree, say).
+const OUTFIT_RULE =
+  "First look at image 2. If it shows a model wearing a complete look (for example a dress, a swimsuit, or trousers with a top), " +
+  "dress the person in image 1 in that whole look, every garment the model wears, even though the product is only one of them. " +
+  "If image 2 shows only this one garment by itself (laid flat, on a hanger, or cropped to that garment), replace only that garment and keep the rest of the person's clothes.";
 
 export function bananaPrompt(p: PieceBrief): string {
   const named = p.styles.length ? ` (${p.styles.join(", ")})` : "";
   return [
-    `Image 1 is a photo of a person. Image 2 is a product photo of a ${p.description}${named} from a Bangladeshi brand.`,
-    "Dress the person in image 1 in exactly this garment.",
+    `Image 1 is a photo of a person. Image 2 is a product photo of a ${p.description}${named}.`,
+    OUTFIT_RULE,
     HOW_WORN[p.slot] ?? "",
     "Reproduce the garment's colours, weave, print, embroidery and border faithfully.",
     "If the product photo shows the garment folded, on a hanger or on a mannequin, show how it looks when worn.",
@@ -35,7 +41,9 @@ export function bananaPrompt(p: PieceBrief): string {
   ].filter(Boolean).join(" ");
 }
 
-const FASHN_CATEGORY = (slot: Slot) => (slot === "top" || slot === "kurti" ? "tops" : slot === "bottom" ? "bottoms" : "one-pieces");
+// Sarees and sets are whole outfits; for single pieces FASHN's "auto" reads the photo, so a garment shown
+// as part of a full look is transferred as that look.
+const FASHN_CATEGORY = (slot: Slot) => (slot === "saree" || slot === "set2" || slot === "set3" ? "one-pieces" : "auto");
 
 /** The fal endpoint and request body for one try-on. */
 export function falRequest(model: FalModel, person: string, garment: string, brief: PieceBrief): { url: string; body: object } {
