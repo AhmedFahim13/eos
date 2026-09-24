@@ -1,7 +1,7 @@
 // lib/tryon/types.ts — one interface for every try-on model.
 import type { Slot } from "@/lib/catalog/slots";
 
-export type ProviderId = "ootd" | "idm" | "fal";
+export type ProviderId = "ootd" | "idm" | "fal" | "banana";
 
 export interface TryOnInput {
   /** The person photo as a data URL. */
@@ -11,6 +11,8 @@ export interface TryOnInput {
   slot: Slot;
   /** Short garment description, e.g. "maroon georgette saree". */
   description: string;
+  /** Established design names, passed to instruction-following models. */
+  styles?: string[];
 }
 
 export type TryOnResult =
@@ -22,4 +24,4 @@ export interface Provider {
   run(input: TryOnInput): Promise<TryOnResult>;
 }
 
-export type Providers = Record<ProviderId, Provider | undefined>;
+export type Providers = Partial<Record<ProviderId, Provider>>;

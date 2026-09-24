@@ -32,7 +32,7 @@ export function outOfCapacity(tried: TryOnResult[]): boolean {
     && tried.every((r) => !r.ok && (r.reason === "quota" || r.reason === "unavailable"));
 }
 
-/** The unlocked "stronger model" path: fal first, the free models behind it if fal fails. */
+/** The unlocked "stronger model" path: Nano Banana Pro, then FASHN, then the free models. */
 export function strongOrder(slot: Slot): ProviderId[] {
-  return ["fal", ...providerOrder(slot, false)];
+  return ["banana", "fal", ...providerOrder(slot, false)];
 }

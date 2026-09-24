@@ -229,7 +229,7 @@ export function Board() {
                   </button>
                   <div className="rounded-xl bg-neutral-50 px-3 py-2 text-center text-[11px] text-neutral-600">
                     {code ? (<>
-                      <span className="font-medium">✓ Stronger model on</span> (fal.ai, faster and sharper){" "}
+                      <span className="font-medium">✓ Stronger model on</span> (Google&apos;s Nano Banana Pro, backed by FASHN){" "}
                       <button onClick={lock} className="underline">turn off</button>
                     </>) : codeOpen ? (
                       <form onSubmit={(e) => { e.preventDefault(); unlock(); }} className="flex items-center gap-1.5">

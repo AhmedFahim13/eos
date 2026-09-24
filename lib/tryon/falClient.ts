@@ -1,22 +1,23 @@
 // lib/tryon/falClient.ts — browser-side provider for the paid model; sends the owner's unlock code.
 import type { Provider } from "./types";
 
-export function falProvider(code: string, fetchImpl: typeof fetch = fetch): Provider {
+export function falProvider(code: string, model: "fashn" | "banana" = "fashn", fetchImpl: typeof fetch = fetch): Provider {
+  const id = model === "banana" ? "banana" : "fal";
   return {
-    id: "fal",
+    id,
     async run(input) {
       try {
         const res = await fetchImpl("/api/tryon", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ person: input.person, garment: input.garment, slot: input.slot, code }),
+          body: JSON.stringify({ person: input.person, garment: input.garment, slot: input.slot, description: input.description, styles: input.styles ?? [], model, code }),
         });
         const d = await res.json().catch(() => ({}));
-        if (res.ok && d.image) return { ok: true, provider: "fal", image: d.image };
+        if (res.ok && d.image) return { ok: true, provider: id, image: d.image };
         const reason = res.status === 503 || res.status === 429 || res.status === 401 ? "unavailable" : /balance/i.test(d.message ?? "") ? "quota" : "error";
-        return { ok: false, provider: "fal", reason, detail: d.message ?? `HTTP ${res.status}` };
+        return { ok: false, provider: id, reason, detail: d.message ?? `HTTP ${res.status}` };
       } catch (e) {
-        return { ok: false, provider: "fal", reason: "error", detail: String(e).slice(0, 200) };
+        return { ok: false, provider: id, reason: "error", detail: String(e).slice(0, 200) };
       }
     },
   };
