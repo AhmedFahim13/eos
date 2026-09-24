@@ -14,9 +14,9 @@ Live: https://eos-93xe.vercel.app · Benchmark: https://eos-93xe.vercel.app/benc
    cached, so a piece is never tagged twice. Every piece links back to the brand.
 2. **Try-on.** Your browser sends your photo and the piece straight to open try-on models on
    Hugging Face (OOTDiffusion for full-length pieces, IDM-VTON for tops). Each visitor uses their
-   own free GPU allowance, and Eos never sees or stores the photo. If those Spaces are busy and
-   the optional paid fallback (fal.ai) is enabled, a photo may instead be sent through Eos's
-   server to fal.ai for that one try-on; it is not stored there either.
+   own free GPU allowance, and Eos never sees or stores the photo. A "stronger model" (fal.ai
+   FASHN, paid) is available behind an owner's code: then the photo goes through Eos's server to
+   fal.ai for that try-on, is not stored, and the free models remain the backup.
 3. **Judge.** Every result is checked before you see it: is the garment's colour kept, is it
    still you, did the outfit actually change. A miss is retried once on the other model; if both
    miss, you get the better one with a plain note instead of a silently wrong picture.
@@ -57,9 +57,9 @@ Benchmark: `npm run bench:run`, `npm run bench:report`, `npm run bench:calibrate
 
 Product data comes only from the brands' public feeds, for a non-commercial demo, with every
 piece linked to the brand's own page. A brand can ask for removal at any time. Uploaded photos go
-directly from the visitor's browser to Hugging Face and are never stored by Eos. If the optional
-paid fallback (fal.ai) is enabled, a photo may instead pass through Eos's server to fal.ai for
-that one try-on; it is not stored by either. Benchmark photos are openly licensed; sources and
+directly from the visitor's browser to Hugging Face and are never stored by Eos. When the
+code-locked stronger model is on, a photo instead passes through Eos's server to fal.ai for that
+try-on; it is not stored by either. Benchmark photos are openly licensed; sources and
 credits are in `data/bench/people.json`.
 
 The 3D atelier (moods, procedural garments, prints) is still in the app under the 3D tab.
