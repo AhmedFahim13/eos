@@ -11,13 +11,17 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 150
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: { node-version: 22, cache: npm }
       - run: npm ci
-      - name: Fetch feeds
+      - name: Read new product pages (shops without a product API)
+        run: npm run catalog:pages
+        env:
+          PAGES_BUDGET: "700"
+      - name: Fetch feeds and merge pages
         run: npm run catalog:fetch
       - name: Focused colour read for tagged pieces
         run: npm run catalog:colors || true

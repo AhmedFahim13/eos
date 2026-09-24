@@ -25,6 +25,6 @@ export function toArchivePiece(p: ArchivePiece): Piece | null {
   if (!slot || !p.image) return null;
   return {
     id: `archive-${p.id}`, slot, name: p.name, brand: p.brand, url: "", price: null, image: p.image,
-    colors: [], fabric: "unknown", work: "none", formality: 3, occasions: [], imageKind: "on_model",
+    colors: [], fabric: "unknown", work: "none", formality: 3, occasions: [], imageKind: "on_model", styles: [],
   };
 }

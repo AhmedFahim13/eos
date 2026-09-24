@@ -3,6 +3,7 @@
 import type { Slot } from "@/lib/catalog/slots";
 import type { Tag } from "./tags";
 import { mergeColors, type ColorRead } from "./colorPass";
+import { mergeStyles, stylesFromText } from "./styles";
 
 const has = (re: RegExp, s: string) => re.test(s);
 
@@ -57,5 +58,6 @@ export function applyRules(text: { name: string; hints: string }, tag: Tag, read
   const slot = slotFromText(text.name, text.hints) ?? tag.slot;
   const brand = colorFromText(text.name, text.hints);
   const colors = brand || read ? mergeColors(brand, read, tag.colors) : tag.colors;
-  return slot === tag.slot && colors === tag.colors ? tag : { ...tag, slot, colors };
+  const styles = mergeStyles(stylesFromText(text.name, text.hints), read?.styles);
+  return { ...tag, slot, colors, styles };
 }

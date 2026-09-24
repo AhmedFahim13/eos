@@ -9,7 +9,7 @@ import type { Piece } from "@/lib/catalog/types";
 const mk = (id: string, over: Partial<Piece> = {}): Piece => ({
   id, slot: "saree", name: id, brand: "B", url: "u", price: 3000, image: "i",
   colors: [{ name: "red", hex: "#c0282d" }], fabric: "silk", work: "embroidery", formality: 5,
-  occasions: ["wedding"], imageKind: "flat", ...over,
+  occasions: ["wedding"], imageKind: "flat", styles: [], ...over,
 });
 
 const pieces = [

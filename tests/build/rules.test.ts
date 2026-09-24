@@ -54,7 +54,11 @@ describe("applyRules", () => {
     expect(t.colors).toEqual(["ivory", "white", "black"]);
   });
   it("keeps the model's answer when the text says nothing", () => {
-    expect(applyRules({ name: "Digital Printed Long Dress", hints: "" }, tag)).toEqual(tag);
+    expect(applyRules({ name: "Plain Long Dress", hints: "" }, tag)).toEqual({ ...tag, styles: [] });
+  });
+  it("adds style tags from the brand text and the vision read", () => {
+    const t = applyRules({ name: "Dhakai Jamdani Saree", hints: "" }, { ...tag, slot: "saree" }, { primary: "red", secondary: [], styles: ["Zari"] });
+    expect(t.styles).toEqual(["Jamdani", "Zari"]);
   });
   it("never un-skips a piece the model rejected", () => {
     expect(applyRules({ name: "Boxer Two-Piece Pack", hints: "" }, { ...tag, slot: "skip" }).slot).toBe("skip");

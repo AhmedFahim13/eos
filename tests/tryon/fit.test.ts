@@ -8,7 +8,7 @@ import type { Verdict } from "@/lib/judge/judge";
 const piece: Piece = {
   id: "p", slot: "saree", name: "Red Saree", brand: "Kay Kraft", url: "u", price: 1, image: "https://g",
   colors: [{ name: "red", hex: "#c0282d" }], fabric: "georgette", work: "none", formality: 4,
-  occasions: ["eid"], imageKind: "flat",
+  occasions: ["eid"], imageKind: "flat", styles: [],
 };
 
 // Plain `Omit<TryOnResult, "provider">` doesn't distribute over the union (TryOnResult's

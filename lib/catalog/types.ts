@@ -26,4 +26,6 @@ export interface Piece {
   formality: number;
   occasions: Occasion[];
   imageKind: ImageKind;
+  /** Established design names for search (weaves, crafts, cuts, bottoms, fabrics). */
+  styles: string[];
 }
