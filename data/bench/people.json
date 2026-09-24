@@ -1,7 +1,4 @@
 [
-  { "id": "p01", "file": "data/bench/people/p01.jpg", "source": "https://unsplash.com/photos/REPLACE", "license": "Unsplash License", "credit": "REPLACE" },
-  { "id": "p02", "file": "data/bench/people/p02.jpg", "source": "https://unsplash.com/photos/REPLACE", "license": "Unsplash License", "credit": "REPLACE" },
-  { "id": "p03", "file": "data/bench/people/p03.jpg", "source": "https://unsplash.com/photos/REPLACE", "license": "Unsplash License", "credit": "REPLACE" },
-  { "id": "p04", "file": "data/bench/people/p04.jpg", "source": "https://unsplash.com/photos/REPLACE", "license": "Unsplash License", "credit": "REPLACE" },
-  { "id": "p05", "file": "data/bench/people/p05.jpg", "source": "https://unsplash.com/photos/REPLACE", "license": "Unsplash License", "credit": "REPLACE" }
+  { "id": "p01", "file": "public/samples/model-1.jpg", "source": "https://www.pexels.com/photo/a-woman-wearing-a-black-tank-top-and-denim-pants-5957081/", "license": "Pexels License", "credit": "Tanya Varshney" },
+  { "id": "p02", "file": "public/samples/model-2.jpg", "source": "https://www.pexels.com/photo/a-woman-in-white-shirt-and-black-pants-standing-10479439/", "license": "Pexels License", "credit": "Eduardo Eugenio Padron" }
 ]

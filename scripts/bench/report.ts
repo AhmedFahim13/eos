@@ -23,7 +23,7 @@ const md = [
   "",
   "## Method",
   "",
-  "Five openly licensed photos of South Asian women (sources and licences in `data/bench/people.json`) × two pieces per garment type from the live catalog × each model that accepts that type. Each output is scored by the same judge that runs in the app: garment colour present (share of the garment region within CIELAB ΔE 25 of a tagged colour), same person (difference hash of the head region), outfit changed (mean ΔE across the garment region).",
+  "Openly licensed photos of women (Pexels; sources, licences and credits in `data/bench/people.json`) × two pieces per garment type from the live catalog × each model that accepts that type. Each output is scored by the same judge that runs in the app: garment colour present (share of the garment region within CIELAB ΔE 25 of a tagged colour), same person (difference hash of the head region), outfit changed (mean ΔE across the garment region).",
   "",
   judge ? `The judge agreed with a human rating on ${pct(judge.test)} of held-out outputs (${judge.n} rated in total).` : "Judge agreement with human ratings: not calibrated yet.",
   tagger ? `The catalog tagger chose the right garment type for ${pct(tagger.slotAccuracy)} of ${tagger.n} pieces and the right main colour for ${pct(tagger.colorAgreement)}, checked against labels from a second AI model (Claude, labelling blind from the product photo and name), not a person. Most misses are two-piece sets tagged as three-piece: brands sell a kameez with dupatta as a two-piece and photograph it with trousers.` : "Tagger accuracy: not scored yet.",

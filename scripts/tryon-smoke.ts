@@ -5,7 +5,7 @@ import { idmProvider, ootdProvider } from "@/lib/tryon/hf";
 import { dataUrlToBuffer, fileToDataUrl, nodeDeps } from "@/lib/tryon/node";
 import { SLOT_NOUN, type Piece } from "@/lib/catalog";
 
-const [personPath = "public/samples/model.jpg", pieceId] = process.argv.slice(2);
+const [personPath = "public/samples/model-1.jpg", pieceId] = process.argv.slice(2);
 const pieces: Piece[] = JSON.parse(readFileSync("public/catalog.json", "utf8"));
 const piece = pieces.find((p) => p.id === pieceId) ?? pieces.find((p) => p.slot === "kurti") ?? pieces[0];
 const person = await fileToDataUrl(personPath);
