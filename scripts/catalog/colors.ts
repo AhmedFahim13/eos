@@ -1,5 +1,6 @@
 // scripts/catalog/colors.ts — focused colour read for each tagged piece, once, cached by the same key as tags.
-// COLOR_ONLY=gold limits the run to the reference-labelled pieces (for measuring before spending quota).
+// COLOR_ONLY=labels limits the run to the reference-labelled pieces (tune and test sets), to measure
+// the effect before spending quota on the whole catalog.
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import sharp from "sharp";
 import { generateJSON, QuotaError } from "@/lib/ai/gemini";
@@ -21,8 +22,9 @@ const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 const raws: RawPiece[] = JSON.parse(readFileSync("data/catalog/raw.json", "utf8"));
 const tags: Record<string, Tag> = JSON.parse(readFileSync("data/catalog/tags-cache.json", "utf8"));
 const cache: Record<string, ColorRead> = existsSync(CACHE) ? JSON.parse(readFileSync(CACHE, "utf8")) : {};
-const only = process.env.COLOR_ONLY === "gold"
-  ? new Set((JSON.parse(readFileSync("data/labels/tags-gold.json", "utf8")) as { id: string }[]).map((g) => g.id))
+const only = process.env.COLOR_ONLY === "labels"
+  ? new Set(["data/labels/tags-gold.json", "data/labels/tags-test.json"].filter(existsSync)
+      .flatMap((f) => (JSON.parse(readFileSync(f, "utf8")) as { id: string }[]).map((g) => g.id)))
   : null;
 
 const todo = raws.filter((r) => {
