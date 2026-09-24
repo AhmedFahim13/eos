@@ -2,12 +2,14 @@
 import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SLOTS, SLOT_TINT, searchPieces, imgUrl, useCatalog } from "@/lib/catalog";
+import { ARCHIVE_SLOTS } from "@/lib/catalog/archive";
 import { usePhoto } from "@/lib/photostore";
 import { useBroken } from "@/lib/brokenImages";
 
 export function Catalog() {
   const { equipped, tab, setTab, query, setQuery, pick, savedLooks, loadLook, deleteLook } = usePhoto();
-  const { pieces: all, status, load } = useCatalog();
+  const { pieces: all, status, load, source } = useCatalog();
+  const tabs = source === "archive" ? ARCHIVE_SLOTS : SLOTS;
   const { broken, mark } = useBroken();
   useEffect(() => { load(); }, [load]);
   const panel = { background: "var(--panel)", color: "var(--text)" } as const;
@@ -16,10 +18,10 @@ export function Catalog() {
   return (
     <>
       <aside className="pointer-events-auto absolute right-3 top-20 bottom-24 flex w-72 flex-col rounded-2xl p-3 backdrop-blur-xl shadow-xl md:right-6 md:w-80" style={panel}>
-        <h2 className="mb-2 px-1 font-serif text-lg tracking-wide">Wardrobe</h2>
+        <h2 className="mb-2 px-1 font-serif text-lg tracking-wide">{source === "archive" ? "Archive" : "Wardrobe"}</h2>
 
         <div className="mb-2 flex gap-1 overflow-x-auto pb-1 text-[11px]">
-          {SLOTS.map(({ slot, label }) => (
+          {tabs.map(({ slot, label }) => (
             <button
               key={slot}
               onClick={() => setTab(slot)}

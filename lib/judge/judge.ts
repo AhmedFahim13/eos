@@ -24,7 +24,8 @@ export interface Verdict {
 export function measure(input: Pixels, result: Pixels, piece: Pick<Piece, "slot" | "colors">): Metrics {
   const box = garmentBox(piece.slot);
   const targets = piece.colors.map((c) => hexToLab(c.hex));
-  const coverage = colorCoverage(result, box, targets);
+  // A piece with no tagged colours (the archive) cannot be colour-checked, so it passes that check.
+  const coverage = targets.length ? colorCoverage(result, box, targets) : 1;
   const headSimilarity = hashSimilarity(dHash(input, HEAD), dHash(result, HEAD));
   const a = labGrid(input, box, 16, 20), b = labGrid(result, box, 16, 20);
   const change = a.reduce((s, l, i) => s + deltaE(l, b[i]), 0) / a.length;

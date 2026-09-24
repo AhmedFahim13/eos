@@ -42,6 +42,10 @@ describe("judge", () => {
     expect(v.color).toBe(false);
     expect(v.pass).toBe(false);
   });
+  it("skips the colour check for a piece with no tagged colours", () => {
+    const v = judge(input, person([40, 70, 190]), { slot: "saree", colors: [] });
+    expect(v.color).toBe(true);
+  });
   it("fails 'changed' when the model returned the input", () => {
     const v = judge(input, input, { ...piece, colors: [{ name: "white", hex: "#f5f5f0" }] });
     expect(v.changed).toBe(false);

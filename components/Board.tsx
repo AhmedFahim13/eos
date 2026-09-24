@@ -20,9 +20,11 @@ function Tile({ id, big }: { id: string; big?: boolean }) {
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src={imgUrl(p.image)} alt={p.name} loading="lazy" className={`w-full ${big ? "h-52" : "h-28"} object-contain p-1`} />
       <span className="block truncate px-2 text-[10px] tracking-wide text-neutral-600">{p.name}</span>
-      <a href={p.url} target="_blank" rel="noopener noreferrer" className="block truncate px-2 pb-1.5 text-[10px] text-neutral-500 underline">
-        {p.price ? `৳${p.price.toLocaleString("en-IN")} · ` : ""}View at {p.brand} ↗
-      </a>
+      {p.url ? (
+        <a href={p.url} target="_blank" rel="noopener noreferrer" className="block truncate px-2 pb-1.5 text-[10px] text-neutral-500 underline">
+          {p.price ? `৳${p.price.toLocaleString("en-IN")} · ` : ""}View at {p.brand} ↗
+        </a>
+      ) : <span className="block truncate px-2 pb-1.5 text-[10px] text-neutral-500">{p.brand}</span>}
     </motion.div>
   );
 }
