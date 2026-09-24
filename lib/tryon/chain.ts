@@ -2,9 +2,10 @@
 import type { Slot } from "@/lib/catalog/slots";
 import type { ProviderId, Providers, TryOnInput, TryOnResult } from "./types";
 
-/** OOTDiffusion handles full-length pieces; IDM-VTON is upper-body only; fal is the paid last resort. */
+/** OOTDiffusion handles full-length pieces; IDM-VTON is upper-body only, so it never gets a saree or a set
+ * (it would dress the top half and leave the rest); fal is the paid last resort. */
 export function providerOrder(slot: Slot, hasFal: boolean): ProviderId[] {
-  const base: ProviderId[] = slot === "top" ? ["idm", "ootd"] : slot === "bottom" ? ["ootd"] : ["ootd", "idm"];
+  const base: ProviderId[] = slot === "top" ? ["idm", "ootd"] : slot === "kurti" ? ["ootd", "idm"] : ["ootd"];
   return hasFal ? [...base, "fal"] : base;
 }
 

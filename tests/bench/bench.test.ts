@@ -20,10 +20,11 @@ describe("selectBenchPieces", () => {
     expect(a.some((p) => p.slot === "orna")).toBe(false);
     expect(selectBenchPieces([...pieces].reverse(), 2).map((p) => p.id).sort()).toEqual(a.map((p) => p.id).sort());
   });
-  it("plans person × piece × provider, bottoms on one model", () => {
+  it("plans person × piece × provider; full-length pieces and bottoms on one model", () => {
     const sel = selectBenchPieces(pieces, 2);
     const runs = planRuns(["p01", "p02"], sel);
-    expect(runs).toHaveLength(2 * (10 * 2 + 2 * 1));
+    // kurti and top: 2 models each (4 pieces); saree, sets and bottoms: OOTDiffusion only (8 pieces)
+    expect(runs).toHaveLength(2 * (4 * 2 + 8 * 1));
     expect(runs[0]).toEqual({ key: expect.stringContaining("p01|"), person: "p01", piece: expect.any(String), provider: expect.any(String) });
   });
 });

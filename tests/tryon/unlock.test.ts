@@ -19,7 +19,7 @@ describe("verifyCode", () => {
 
 describe("strongOrder", () => {
   it("puts Nano Banana Pro first, then FASHN, then the free models", () => {
-    expect(strongOrder("saree")).toEqual(["banana", "fal", "ootd", "idm"]);
+    expect(strongOrder("saree")).toEqual(["banana", "fal", "ootd"]);
     expect(strongOrder("top")).toEqual(["banana", "fal", "idm", "ootd"]);
   });
 });

@@ -14,7 +14,8 @@ const fake = (id: ProviderId, r: WithoutProvider<TryOnResult>): Provider => ({
 
 describe("providerOrder", () => {
   it("full-length pieces start with OOTDiffusion", () => {
-    expect(providerOrder("saree", false)).toEqual(["ootd", "idm"]);
+    expect(providerOrder("saree", false)).toEqual(["ootd"]);
+    expect(providerOrder("set3", true)).toEqual(["ootd", "fal"]);
     expect(providerOrder("kurti", true)).toEqual(["ootd", "idm", "fal"]);
   });
   it("tops start with IDM-VTON, bottoms only use OOTDiffusion", () => {
