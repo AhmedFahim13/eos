@@ -23,7 +23,7 @@ const prov = (id: ProviderId, ...results: WithoutProvider<TryOnResult>[]): Provi
   return { id, run };
 };
 const verdict = (pass: boolean, score: number, over: Partial<Verdict> = {}): Verdict => ({
-  pass, color: pass, person: true, changed: true, score, metrics: { colorCoverage: 1, headSimilarity: 1, change: 10 }, ...over,
+  pass, color: pass, person: true, changed: true, fullLength: true, score, metrics: { colorCoverage: 1, headSimilarity: 1, change: 10 }, ...over,
 });
 const deps = (ootd: Provider, idm: Provider, judge: FitDeps["judge"]): FitDeps => ({
   providers: { ootd, idm, fal: undefined }, orderFor: () => ["ootd", "idm"], judge,
@@ -58,6 +58,11 @@ describe("fitOne", () => {
     const out = await fitOne("P", piece, d);
     expect(out).toMatchObject({ kind: "ok", image: "A" });
     expect(out.kind === "ok" && out.note).toBeTruthy();
+  });
+  it("refuses to show a full-length piece that came out as a top", async () => {
+    const judge = vi.fn().mockResolvedValueOnce(verdict(false, 2, { fullLength: false })).mockResolvedValueOnce(verdict(false, 1, { fullLength: false }));
+    const d = deps(prov("ootd", { ok: true, image: "A" }), prov("idm", { ok: true, image: "B" }), judge);
+    await expect(fitOne("P", piece, d)).resolves.toMatchObject({ kind: "error", message: expect.stringContaining("full-length") });
   });
   it("reports quota when every model is out of GPU", async () => {
     const d = deps(prov("ootd", { ok: false, reason: "quota", detail: "" }), prov("idm", { ok: false, reason: "quota", detail: "" }), vi.fn());

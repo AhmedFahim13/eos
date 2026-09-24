@@ -6,6 +6,8 @@ import type { Pixels } from "./pixels";
 export interface Box { x0: number; y0: number; x1: number; y1: number }
 
 export const HEAD: Box = { x0: 0.3, y0: 0.02, x1: 0.7, y1: 0.2 };
+/** Knee to shin: where a saree or a set's bottom must show. */
+export const LOWER_LEGS: Box = { x0: 0.3, y0: 0.62, x1: 0.7, y1: 0.88 };
 
 export function garmentBox(slot: Slot): Box {
   if (slot === "top" || slot === "kurti") return { x0: 0.25, y0: 0.2, x1: 0.75, y1: 0.5 };

@@ -22,6 +22,51 @@ const person = (torso: [number, number, number], face: (x: number) => number = f
     return [150, 150, 150];
   });
 
+// A result where the garment covers only chest to hips (y 0.22–0.5): what an upper-body model makes of a saree.
+const topOnly = (torso: [number, number, number]) =>
+  makePixels(W, H, (x, y) => {
+    if (y < 0.2 * H && x > 0.3 * W && x < 0.7 * W) return shade(falling(x));
+    if (y > 0.22 * H && y < 0.5 * H && x > 0.25 * W && x < 0.75 * W) return torso;
+    return [150, 150, 150];
+  });
+
+describe("full length", () => {
+  const input = makePixels(W, H, (x, y) => (y < 0.2 * H && x > 0.3 * W && x < 0.7 * W ? shade(falling(x)) : [150, 150, 150]));
+  it("passes a saree that reaches the legs", () => {
+    expect(judge(input, person(RED), piece).fullLength).toBe(true);
+  });
+  it("fails a saree that came out as a top", () => {
+    const v = judge(input, topOnly(RED), piece);
+    expect(v.fullLength).toBe(false);
+    expect(v.pass).toBe(false);
+  });
+  it("fails a saree whose legs changed but show none of its colour (turned into a short dress)", () => {
+    const shortDress = makePixels(W, H, (x, y) => {
+      if (y < 0.2 * H && x > 0.3 * W && x < 0.7 * W) return shade(falling(x));
+      if (y > 0.22 * H && y < 0.5 * H && x > 0.25 * W && x < 0.75 * W) return RED;
+      if (y >= 0.5 * H) return [205, 160, 130];
+      return [150, 150, 150];
+    });
+    expect(judge(input, shortDress, piece).fullLength).toBe(false);
+  });
+  it("lets a set pass on a clearly changed bottom of another colour", () => {
+    const setPiece = { slot: "set2" as const, colors: [{ name: "red", hex: "#c0282d" }] };
+    const redTopWhiteBottom = makePixels(W, H, (x, y) => {
+      if (y < 0.2 * H && x > 0.3 * W && x < 0.7 * W) return shade(falling(x));
+      if (y > 0.22 * H && y < 0.5 * H && x > 0.25 * W && x < 0.75 * W) return RED;
+      if (y >= 0.5 * H && x > 0.3 * W && x < 0.7 * W) return [250, 250, 250];
+      return [150, 150, 150];
+    });
+    expect(judge(input, redTopWhiteBottom, setPiece).fullLength).toBe(true);
+  });
+  it("does not apply to tops or kurtis", () => {
+    expect(judge(input, topOnly(RED), { slot: "top", colors: piece.colors }).fullLength).toBe(true);
+  });
+  it("leaves older metrics without leg data undecided on it", () => {
+    expect(decide({ colorCoverage: 1, headSimilarity: 1, change: 20 }).fullLength).toBe(true);
+  });
+});
+
 describe("hash", () => {
   it("is identical for identical regions and low for a changed one", () => {
     const a = person([255, 255, 255]);

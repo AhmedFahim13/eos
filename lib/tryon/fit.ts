@@ -21,6 +21,8 @@ export function describePiece(p: Piece): string {
   return [p.colors[0]?.name, p.fabric !== "unknown" ? p.fabric : "", SLOT_NOUN[p.slot]].filter(Boolean).join(" ");
 }
 
+const NOT_FULL_LENGTH = "The model couldn't dress this full-length piece properly on your photo. A standing, full-body photo helps, or try the stronger model.";
+
 export function noteFor(v: Verdict): string {
   if (!v.color) return "The colours came out different from the real piece in this one.";
   if (!v.person) return "The face may look a little altered in this one.";
@@ -45,12 +47,13 @@ export async function fitOne(person: string, piece: Piece, deps: FitDeps): Promi
   if (!v1 || v1.pass) return { kind: "ok", image: r1.image, provider: r1.provider };
 
   const second = await runChain(input, deps.providers, order, first.tried.map((t) => t.provider));
-  if (!second.result.ok) return { kind: "ok", image: r1.image, provider: r1.provider, note: noteFor(v1) };
+  if (!second.result.ok) return v1.fullLength ? { kind: "ok", image: r1.image, provider: r1.provider, note: noteFor(v1) } : { kind: "error", message: NOT_FULL_LENGTH };
   const r2 = second.result;
   const v2 = await safeJudge(deps, person, r2.image, piece);
   if (!v2 || v2.pass) return { kind: "ok", image: r2.image, provider: r2.provider };
 
-  return v2.score > v1.score
-    ? { kind: "ok", image: r2.image, provider: r2.provider, note: noteFor(v2) }
-    : { kind: "ok", image: r1.image, provider: r1.provider, note: noteFor(v1) };
+  const [best, bv] = v2.score > v1.score ? [r2, v2] : [r1, v1];
+  // A saree shown as a top is wrong, not just imperfect: say so instead of showing it.
+  if (!bv.fullLength) return { kind: "error", message: NOT_FULL_LENGTH };
+  return { kind: "ok", image: best.image, provider: best.provider, note: noteFor(bv) };
 }
