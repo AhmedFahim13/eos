@@ -30,7 +30,7 @@ const hf: HfDeps = {
 
 export async function liveDeps(unlockCode: string | null = null): Promise<FitDeps> {
   return {
-    providers: { ootd: ootdProvider(hf), idm: idmProvider(hf), fal: unlockCode ? falProvider(unlockCode) : undefined },
+    providers: { ootd: ootdProvider(hf), idm: idmProvider(hf), fal: unlockCode ? falProvider(unlockCode) : undefined, banana: unlockCode ? falProvider(unlockCode, "banana") : undefined },
     orderFor: (slot) => (unlockCode ? strongOrder(slot) : providerOrder(slot, false)),
     judge: async (person, result, piece) => judge(await loadPixels(person), await loadPixels(result), piece),
   };

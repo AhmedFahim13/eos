@@ -33,7 +33,7 @@ async function safeJudge(deps: FitDeps, person: string, image: string, piece: Pi
 }
 
 export async function fitOne(person: string, piece: Piece, deps: FitDeps): Promise<FitOutcome> {
-  const input = { person, garment: piece.image, slot: piece.slot, description: describePiece(piece) };
+  const input = { person, garment: piece.image, slot: piece.slot, description: describePiece(piece), styles: piece.styles ?? [] };
   const order = deps.orderFor(piece.slot);
 
   const first = await runChain(input, deps.providers, order);

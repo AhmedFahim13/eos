@@ -22,7 +22,7 @@ const TEXT_STYLES: [RegExp, string][] = [
   [/\bculottes?\b/i, "Culottes"], [/\bwide[- ]?leg\b/i, "Wide-leg"], [/\bjeans|denim\b/i, "Denim"], [/\bleggings?\b/i, "Leggings"], [/\bskirt\b/i, "Skirt"],
   // Fabrics
   [/\bcotton\b/i, "Cotton"], [/\bsilk\b/i, "Silk"], [/\blinen\b/i, "Linen"], [/\blawn\b/i, "Lawn"], [/\bgeorgette\b/i, "Georgette"],
-  [/\bchiffon\b/i, "Chiffon"], [/\bviscose\b/i, "Viscose"], [/\bkhadi\b/i, "Khadi"], [/\bvelvet\b/i, "Velvet"], [/\borganza\b/i, "Organza"],
+  [/\bchiffon\b/i, "Chiffon"], [/\bviscose\b/i, "Viscose"], [/\bkhadi\b/i, "Khadi"], [/\bvelvet\b/i, "Velvet"], [/\borganza\b/i, "Organza"], [/\bnet\b/i, "Net"],
 ];
 
 /** What a photo can show; the vision pass may only answer from this list. */
