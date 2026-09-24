@@ -1,8 +1,8 @@
 {
   "n": 60,
   "slotAccuracy": 0.9833333333333333,
-  "colorAgreement": 0.6833333333333333,
-  "colorFamilyAgreement": 0.85,
+  "colorAgreement": 0.7666666666666667,
+  "colorFamilyAgreement": 0.9166666666666666,
   "occasionPrecision": 0.4644808743169399,
   "occasionRecall": 0.7727272727272727,
   "confusion": {
@@ -27,5 +27,5 @@
     }
   },
   "set": "held-out test",
-  "scoredAt": "2026-09-24T04:29:24.784Z"
+  "scoredAt": "2026-09-24T08:10:22.081Z"
 }
