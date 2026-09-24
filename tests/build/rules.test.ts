@@ -20,6 +20,10 @@ describe("slotFromText", () => {
     expect(slotFromText("Polyester Blazer with Shiny Fabric Embellishment - Bling", "")).toBe("top");
     expect(slotFromText("Regular Fit Cap Sleeve T-Shirt with Sequin Front Yoke", "")).toBe("top");
   });
+  it("reads a salwar kameez set as a set, three-piece when it names a dupatta", () => {
+    expect(slotFromText("Maroon Linen Printed Salwar Kameez Set", "")).toBe("set2");
+    expect(slotFromText("Cotton Salwar Kameez with Dupatta", "")).toBe("set3");
+  });
   it("treats a named top-and-bottom pair as a two-piece", () => {
     expect(slotFromText("White Georgette Printed Top with Skirt", "")).toBe("set2");
   });

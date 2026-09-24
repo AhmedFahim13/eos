@@ -20,6 +20,8 @@ export function slotFromText(name: string, hints: string): Slot | null {
   if (has(SAREE, t)) return "saree";
   if (has(SET3, t)) return "set3";
   if (has(SET2, t)) return "set2";
+  // A salwar kameez (set/suit) is at least kameez + salwar; with a dupatta or orna it is a three-piece.
+  if (/\bsalwar (kameez|suit)\b|\bkameez set\b/i.test(name)) return /\b(dupatta|orna|urna)\b/i.test(name) ? "set3" : "set2";
   if (has(KURTI, name)) return "kurti";
   const bottom = has(BOTTOM, name), top = has(TOP, name);
   if (bottom && top) return "set2";

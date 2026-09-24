@@ -8,10 +8,13 @@ Live: https://eos-93xe.vercel.app · Benchmark: https://eos-93xe.vercel.app/benc
 
 ## How it works
 
-1. **Catalog.** Every week a GitHub Action reads the public product feeds of Yellow, Twelve and
-   Kay Kraft, and a vision model (Gemini Flash-Lite, free tier) tags each new piece once: garment
-   type, colours, fabric, work, formality, occasions, and which photo suits try-on. Tags are
-   cached, so a piece is never tagged twice. Every piece links back to the brand.
+1. **Catalog.** Every day a GitHub Action reads the public product feeds of Yellow, Twelve and
+   Kay Kraft, and the product pages (sitemap and schema.org product data, as robots.txt allows)
+   of Tangail Saree Kutir, Dhaka Mart, Le Reve and Horitoki: about 2,900 women's pieces, 1,300 of
+   them sarees. The brand's own wording sets garment type, colour and design names (Jamdani, Katan,
+   Kanchipuram, Anarkali, Palazzo…), and a vision model (Gemini Flash-Lite, free tier) adds the rest
+   once per piece. Design names are established terms only, searchable and shown as filter chips.
+   Every piece links back to the brand.
 2. **Try-on.** Your browser sends your photo and the piece straight to open try-on models on
    Hugging Face (OOTDiffusion for full-length pieces, IDM-VTON for tops). Each visitor uses their
    own free GPU allowance, and Eos never sees or stores the photo. A "stronger model" (fal.ai
