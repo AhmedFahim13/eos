@@ -1,7 +1,7 @@
 name: catalog
 on:
   schedule:
-    - cron: "0 21 * * 5" # Saturday 03:00 Dhaka
+    - cron: "30 8 * * *" # 14:30 Dhaka, after Gemini's free quota resets at midnight Pacific
   workflow_dispatch:
 permissions:
   contents: write
@@ -19,11 +19,16 @@ jobs:
       - run: npm ci
       - name: Fetch feeds
         run: npm run catalog:fetch
+      - name: Focused colour read for tagged pieces
+        run: npm run catalog:colors || true
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          COLOR_BUDGET: "200"
       - name: Tag new pieces and rebuild catalog
         run: npm run catalog:tag
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          TAG_BUDGET: "300"
+          TAG_BUDGET: "250"
       - name: Commit
         run: |
           git config user.name "eos-bot"

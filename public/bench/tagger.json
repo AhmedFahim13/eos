@@ -1,28 +1,31 @@
 {
   "n": 60,
-  "slotAccuracy": 0.8833333333333333,
-  "colorAgreement": 0.7666666666666667,
-  "occasionPrecision": 0.5274725274725275,
-  "occasionRecall": 0.8347826086956521,
+  "slotAccuracy": 0.9833333333333333,
+  "colorAgreement": 0.6833333333333333,
+  "colorFamilyAgreement": 0.85,
+  "occasionPrecision": 0.4644808743169399,
+  "occasionRecall": 0.7727272727272727,
   "confusion": {
-    "set3": {
-      "set3": 6
-    },
-    "bottom": {
-      "bottom": 11
-    },
-    "set2": {
-      "set2": 9,
-      "set3": 5
+    "top": {
+      "top": 10
     },
     "kurti": {
-      "kurti": 15,
-      "set2": 1
+      "kurti": 18,
+      "set3": 1
     },
-    "top": {
-      "top": 12,
-      "set2": 1
+    "set3": {
+      "set3": 9
+    },
+    "saree": {
+      "saree": 6
+    },
+    "bottom": {
+      "bottom": 13
+    },
+    "set2": {
+      "set2": 3
     }
   },
-  "scoredAt": "2026-09-23T11:08:55.374Z"
+  "set": "held-out test",
+  "scoredAt": "2026-09-24T04:29:24.784Z"
 }

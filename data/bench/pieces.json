@@ -1,0 +1,349 @@
+[
+  {
+    "id": "yellow-9254931824892",
+    "slot": "saree",
+    "name": "Digital Printed Cotton Saree",
+    "brand": "Yellow",
+    "url": "https://yellowclothing.net/products/saree-40",
+    "price": 4795,
+    "image": "https://cdn.shopify.com/s/files/1/0305/5789/6843/files/043020_Yellow_0905.jpg?v=1773634062",
+    "colors": [
+      {
+        "name": "blue",
+        "hex": "#2f5fb3"
+      },
+      {
+        "name": "white",
+        "hex": "#f5f5f0"
+      }
+    ],
+    "fabric": "cotton",
+    "work": "print",
+    "formality": 2,
+    "occasions": [
+      "office",
+      "casual",
+      "university"
+    ],
+    "imageKind": "on_model"
+  },
+  {
+    "id": "yellow-9332385480956",
+    "slot": "saree",
+    "name": "Digital Printed Cotton Saree",
+    "brand": "Yellow",
+    "url": "https://yellowclothing.net/products/saree-44",
+    "price": 4795,
+    "image": "https://cdn.shopify.com/s/files/1/0305/5789/6843/files/DSC00433_70a6b18f-1cfc-46bd-8f31-64f2d793b699.jpg?v=1778928100",
+    "colors": [
+      {
+        "name": "blue",
+        "hex": "#2f5fb3"
+      },
+      {
+        "name": "sky",
+        "hex": "#8cc3e8"
+      },
+      {
+        "name": "navy",
+        "hex": "#1f2a48"
+      }
+    ],
+    "fabric": "cotton",
+    "work": "print",
+    "formality": 2,
+    "occasions": [
+      "casual",
+      "office",
+      "university",
+      "puja",
+      "eid"
+    ],
+    "imageKind": "on_model"
+  },
+  {
+    "id": "twelve-8843499798754",
+    "slot": "set3",
+    "name": "Womens Green Three Piece Set",
+    "brand": "Twelve",
+    "url": "https://twelvebd.com/products/sb-3pcs-tw25-04ef-85648-green",
+    "price": 4719,
+    "image": "https://cdn.shopify.com/s/files/1/0564/4081/5810/files/SB-3PCS-TW25-04EF-85648_4.jpg?v=1756707285",
+    "colors": [
+      {
+        "name": "green",
+        "hex": "#2e7d4f"
+      },
+      {
+        "name": "yellow",
+        "hex": "#e8c33a"
+      },
+      {
+        "name": "red",
+        "hex": "#c0282d"
+      }
+    ],
+    "fabric": "lawn",
+    "work": "print",
+    "formality": 2,
+    "occasions": [
+      "eid",
+      "casual",
+      "office"
+    ],
+    "imageKind": "on_model"
+  },
+  {
+    "id": "yellow-9240946114812",
+    "slot": "set3",
+    "name": "Smart Fit Embroidered Three-Piece Ethnic Set",
+    "brand": "Yellow",
+    "url": "https://yellowclothing.net/products/w-ethnic-3-pcs-27",
+    "price": 8595,
+    "image": "https://cdn.shopify.com/s/files/1/0305/5789/6843/files/DSC2059_c12c6fdf-578e-4908-8c17-f644296b910e.jpg?v=1772099938",
+    "colors": [
+      {
+        "name": "red",
+        "hex": "#c0282d"
+      }
+    ],
+    "fabric": "silk",
+    "work": "embroidery",
+    "formality": 3,
+    "occasions": [
+      "eid",
+      "party",
+      "wedding"
+    ],
+    "imageKind": "on_model"
+  },
+  {
+    "id": "yellow-9416703541500",
+    "slot": "set2",
+    "name": "Mystika Printed Viscose Two-Piece Set",
+    "brand": "Yellow",
+    "url": "https://yellowclothing.net/products/w-set-mystika-17",
+    "price": 3595,
+    "image": "https://cdn.shopify.com/s/files/1/0305/5789/6843/files/DSC0414_0307c6dc-e19c-4670-8331-e7de77fb3eca.jpg?v=1785821467",
+    "colors": [
+      {
+        "name": "black",
+        "hex": "#111111"
+      },
+      {
+        "name": "red",
+        "hex": "#c0282d"
+      },
+      {
+        "name": "pink",
+        "hex": "#e58fb0"
+      }
+    ],
+    "fabric": "mixed",
+    "work": "print",
+    "formality": 2,
+    "occasions": [
+      "casual",
+      "office",
+      "university"
+    ],
+    "imageKind": "on_model"
+  },
+  {
+    "id": "yellow-9251028009212",
+    "slot": "set2",
+    "name": "Smart Fit Printed Two-Piece Ethnic Set",
+    "brand": "Yellow",
+    "url": "https://yellowclothing.net/products/w-ethnic-2-pcs-91",
+    "price": 3095,
+    "image": "https://cdn.shopify.com/s/files/1/0305/5789/6843/files/DSC4898_3672c61c-ab4a-4273-bb13-7e5d92701e9e.jpg?v=1772342063",
+    "colors": [
+      {
+        "name": "lavender",
+        "hex": "#b9a7d6"
+      },
+      {
+        "name": "white",
+        "hex": "#f5f5f0"
+      }
+    ],
+    "fabric": "cotton",
+    "work": "print",
+    "formality": 2,
+    "occasions": [
+      "casual",
+      "office",
+      "university"
+    ],
+    "imageKind": "on_model"
+  },
+  {
+    "id": "twelve-9281198260450",
+    "slot": "bottom",
+    "name": "Women’s Light Grey Denim Pant",
+    "brand": "Twelve",
+    "url": "https://twelvebd.com/products/as-den-tw26-07ss-110406-lt-grey",
+    "price": 2189,
+    "image": "https://cdn.shopify.com/s/files/1/0564/4081/5810/files/AS-DEN-TW26-05EA-110406_12.jpg?v=1786863600",
+    "colors": [
+      {
+        "name": "grey",
+        "hex": "#8a8a8a"
+      }
+    ],
+    "fabric": "cotton",
+    "work": "none",
+    "formality": 2,
+    "occasions": [
+      "casual",
+      "university",
+      "office"
+    ],
+    "imageKind": "on_model"
+  },
+  {
+    "id": "yellow-9160685584636",
+    "slot": "bottom",
+    "name": "Smart Fit Ethnic Pants",
+    "brand": "Yellow",
+    "url": "https://yellowclothing.net/products/w-ethnic-pant-63",
+    "price": 1295,
+    "image": "https://cdn.shopify.com/s/files/1/0305/5789/6843/files/DSC00667_8b07443b-5f24-42b4-9d91-bc591474c626.jpg?v=1778921786",
+    "colors": [
+      {
+        "name": "cream",
+        "hex": "#f3e5c0"
+      },
+      {
+        "name": "green",
+        "hex": "#2e7d4f"
+      }
+    ],
+    "fabric": "cotton",
+    "work": "print",
+    "formality": 2,
+    "occasions": [
+      "office",
+      "university",
+      "casual"
+    ],
+    "imageKind": "on_model"
+  },
+  {
+    "id": "yellow-9240949031164",
+    "slot": "kurti",
+    "name": "Relaxed Fit Printed One-Piece Ethnic Kurta",
+    "brand": "Yellow",
+    "url": "https://yellowclothing.net/products/w-ethnic-kurta-206",
+    "price": 2495,
+    "image": "https://cdn.shopify.com/s/files/1/0305/5789/6843/files/DSC0632_a054dc8a-5e6f-4176-a81e-37ed3db3fafa.jpg?v=1771148206",
+    "colors": [
+      {
+        "name": "green",
+        "hex": "#2e7d4f"
+      },
+      {
+        "name": "pink",
+        "hex": "#e58fb0"
+      },
+      {
+        "name": "gold",
+        "hex": "#c9a646"
+      }
+    ],
+    "fabric": "cotton",
+    "work": "print",
+    "formality": 2,
+    "occasions": [
+      "casual",
+      "office",
+      "university"
+    ],
+    "imageKind": "on_model"
+  },
+  {
+    "id": "yellow-9148020228348",
+    "slot": "kurti",
+    "name": "Smart Fit Printed One-Piece Lawn Kurta",
+    "brand": "Yellow",
+    "url": "https://yellowclothing.net/products/w-lawn-kurta-93",
+    "price": 2395,
+    "image": "https://cdn.shopify.com/s/files/1/0305/5789/6843/files/DSC00283_078577c1-2001-4232-9037-3f811401d2b3.jpg?v=1774931838",
+    "colors": [
+      {
+        "name": "red",
+        "hex": "#c0282d"
+      },
+      {
+        "name": "black",
+        "hex": "#111111"
+      },
+      {
+        "name": "beige",
+        "hex": "#d9c3a0"
+      }
+    ],
+    "fabric": "lawn",
+    "work": "print",
+    "formality": 2,
+    "occasions": [
+      "casual",
+      "office",
+      "university",
+      "eid"
+    ],
+    "imageKind": "on_model"
+  },
+  {
+    "id": "yellow-9186188493052",
+    "slot": "top",
+    "name": "Regular Fit Cap Sleeve T-Shirt with Sequin Front Yoke",
+    "brand": "Yellow",
+    "url": "https://yellowclothing.net/products/w-t-shirt-16",
+    "price": 1495,
+    "image": "https://cdn.shopify.com/s/files/1/0305/5789/6843/files/DSC00351_a0e37566-2318-4d04-b907-f1d21d067f39.jpg?v=1767697635",
+    "colors": [
+      {
+        "name": "black",
+        "hex": "#111111"
+      }
+    ],
+    "fabric": "cotton",
+    "work": "sequin",
+    "formality": 2,
+    "occasions": [
+      "casual",
+      "university",
+      "office"
+    ],
+    "imageKind": "on_model"
+  },
+  {
+    "id": "yellow-9319936065788",
+    "slot": "top",
+    "name": "Relaxed Fit Casual Shirt",
+    "brand": "Yellow",
+    "url": "https://yellowclothing.net/products/w-c-shirt-4",
+    "price": 1495,
+    "image": "https://cdn.shopify.com/s/files/1/0305/5789/6843/files/DSC04824_8bfd32fa-ce50-4b11-b22e-8f8b6d3d624b.jpg?v=1777805179",
+    "colors": [
+      {
+        "name": "white",
+        "hex": "#f5f5f0"
+      },
+      {
+        "name": "blue",
+        "hex": "#2f5fb3"
+      }
+    ],
+    "fabric": "georgette",
+    "work": "print",
+    "formality": 2,
+    "occasions": [
+      "office",
+      "university",
+      "casual"
+    ],
+    "imageKind": "on_model"
+  }
+]

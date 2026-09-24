@@ -51,7 +51,8 @@ for (const r of todo) {
 }
 writeFileSync(CACHE, JSON.stringify(cache));
 
-const pieces = buildCatalog(raws, cache);
+const colorCache = existsSync("data/catalog/colors-cache.json") ? JSON.parse(readFileSync("data/catalog/colors-cache.json", "utf8")) : {};
+const pieces = buildCatalog(raws, cache, colorCache);
 if (pieces.length < MIN_PIECES) {
   console.error(`Only ${pieces.length} usable pieces; keeping the previous ${OUT}.`);
   process.exit(1);

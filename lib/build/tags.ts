@@ -3,15 +3,12 @@ import { createHash } from "node:crypto";
 import { SLOT_VALUES, isWearable, type Slot } from "@/lib/catalog/slots";
 import { OCCASIONS, type ImageKind, type Occasion, type Piece } from "@/lib/catalog/types";
 import type { RawPiece } from "./feeds";
+import { PALETTE } from "./palette";
 
-export const PALETTE: Record<string, string> = {
-  white: "#f5f5f0", ivory: "#efe7dc", cream: "#f3e5c0", beige: "#d9c3a0", yellow: "#e8c33a",
-  mustard: "#c9a227", orange: "#e07b39", peach: "#f2b596", coral: "#ee6f5b", red: "#c0282d",
-  maroon: "#6e1a24", pink: "#e58fb0", magenta: "#b8246f", purple: "#6c3a8c", lavender: "#b9a7d6",
-  blue: "#2f5fb3", navy: "#1f2a48", sky: "#8cc3e8", teal: "#1f7a7a", green: "#2e7d4f",
-  olive: "#6b6b2a", mint: "#a8d8b9", brown: "#6b4226", grey: "#8a8a8a", black: "#111111",
-  gold: "#c9a646", silver: "#c0c0c8",
-};
+export { PALETTE };
+import { applyRules } from "./rules";
+import type { ColorRead } from "./colorPass";
+
 
 export const FABRICS = ["cotton", "georgette", "silk", "linen", "lawn", "chiffon", "khadi", "mixed", "unknown"] as const;
 export const WORKS = ["none", "print", "embroidery", "karchupi", "block", "sequin"] as const;
@@ -122,11 +119,11 @@ export function toPiece(raw: RawPiece, tag: Tag): Piece | null {
   };
 }
 
-export function buildCatalog(raws: RawPiece[], cache: Record<string, Tag>): Piece[] {
+export function buildCatalog(raws: RawPiece[], cache: Record<string, Tag>, colorCache: Record<string, ColorRead> = {}): Piece[] {
   const out: Piece[] = [];
   for (const r of raws) {
     const tag = cache[tagKey(r)];
-    const piece = tag ? toPiece(r, tag) : null;
+    const piece = tag ? toPiece(r, applyRules(r, tag, colorCache[tagKey(r)] ?? null)) : null;
     if (piece) out.push(piece);
   }
   return out;

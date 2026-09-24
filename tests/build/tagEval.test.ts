@@ -24,6 +24,7 @@ describe("scoreTags", () => {
     expect(s.n).toBe(2);
     expect(s.slotAccuracy).toBe(0.5);
     expect(s.colorAgreement).toBe(1);
+    expect(s.colorFamilyAgreement).toBe(1);
     expect(s.occasionPrecision).toBeCloseTo(2 / 3);
     expect(s.occasionRecall).toBeCloseTo(2 / 3);
     expect(s.confusion.kurti.top).toBe(1);
