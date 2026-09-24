@@ -31,3 +31,8 @@ export function outOfCapacity(tried: TryOnResult[]): boolean {
   return tried.some((r) => !r.ok && r.reason === "quota")
     && tried.every((r) => !r.ok && (r.reason === "quota" || r.reason === "unavailable"));
 }
+
+/** The unlocked "stronger model" path: fal first, the free models behind it if fal fails. */
+export function strongOrder(slot: Slot): ProviderId[] {
+  return ["fal", ...providerOrder(slot, false)];
+}

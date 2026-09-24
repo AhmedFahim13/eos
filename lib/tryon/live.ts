@@ -1,14 +1,11 @@
-// lib/tryon/live.ts — browser wiring: free Spaces called directly (visitor's own quota), fal only if configured.
+// lib/tryon/live.ts — browser wiring: free Spaces called directly (visitor's own quota); the paid model
+// (fal) only when the owner has unlocked it with their code, and then it goes first.
 import { judge } from "@/lib/judge/judge";
 import { loadPixels } from "@/lib/judge/browser";
-import { providerOrder } from "./chain";
+import { providerOrder, strongOrder } from "./chain";
 import { falProvider } from "./falClient";
 import type { FitDeps } from "./fit";
 import { idmProvider, ootdProvider, type HfDeps } from "./hf";
-
-let falAvailable: Promise<boolean> | null = null;
-const hasFal = () =>
-  (falAvailable ??= fetch("/api/tryon").then((r) => r.json()).then((d) => Boolean(d.fal)).catch(() => false));
 
 const blobToDataUrl = (b: Blob) =>
   new Promise<string>((resolve, reject) => {
@@ -31,11 +28,10 @@ const hf: HfDeps = {
   },
 };
 
-export async function liveDeps(): Promise<FitDeps> {
-  const fal = await hasFal();
+export async function liveDeps(unlockCode: string | null = null): Promise<FitDeps> {
   return {
-    providers: { ootd: ootdProvider(hf), idm: idmProvider(hf), fal: fal ? falProvider() : undefined },
-    orderFor: (slot) => providerOrder(slot, fal),
+    providers: { ootd: ootdProvider(hf), idm: idmProvider(hf), fal: unlockCode ? falProvider(unlockCode) : undefined },
+    orderFor: (slot) => (unlockCode ? strongOrder(slot) : providerOrder(slot, false)),
     judge: async (person, result, piece) => judge(await loadPixels(person), await loadPixels(result), piece),
   };
 }

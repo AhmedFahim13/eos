@@ -9,7 +9,38 @@ interface GalleryItem { piece: string; slot: string; provider: string; image: st
 interface StockModel { id: string; image: string; credit: string; source: string }
 
 const toData = (b: Blob) => new Promise<string>((r, j) => { const fr = new FileReader(); fr.onload = () => r(fr.result as string); fr.onerror = () => j(fr.error); fr.readAsDataURL(b); });
-const resize = (u: string, max = 1024) => new Promise<string>((r, j) => { const i = new Image(); i.onload = () => { const s = Math.min(1, max / Math.max(i.width, i.height)); const c = document.createElement("canvas"); c.width = i.width * s; c.height = i.height * s; c.getContext("2d")!.drawImage(i, 0, 0, c.width, c.height); r(c.toDataURL("image/jpeg", 0.9)); }; i.onerror = () => j(new Error("image decode failed")); i.src = u; });
+// Scale to at most `max` px. Cut-out photos (transparent PNG) are trimmed to the person with a margin and put on
+// white: JPEG has no transparency, and try-on models expect the person to fill the frame.
+const resize = (u: string, max = 1024) => new Promise<string>((r, j) => {
+  const i = new Image();
+  i.onload = () => {
+    let sx = 0, sy = 0, sw = i.width, sh = i.height;
+    const probe = document.createElement("canvas");
+    probe.width = i.width; probe.height = i.height;
+    const pc = probe.getContext("2d", { willReadFrequently: true })!;
+    pc.drawImage(i, 0, 0);
+    const a = pc.getImageData(0, 0, i.width, i.height).data;
+    let x0 = i.width, y0 = i.height, x1 = -1, y1 = -1;
+    for (let y = 0; y < i.height; y++) for (let x = 0; x < i.width; x++) if (a[(y * i.width + x) * 4 + 3] > 16) { if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
+    const transparent = x1 >= 0 && (x1 - x0 + 1) * (y1 - y0 + 1) < 0.9 * i.width * i.height;
+    if (transparent) {
+      const pad = Math.round(0.06 * Math.max(x1 - x0, y1 - y0));
+      sx = Math.max(0, x0 - pad); sy = Math.max(0, y0 - pad);
+      sw = Math.min(i.width, x1 + pad + 1) - sx; sh = Math.min(i.height, y1 + pad + 1) - sy;
+    }
+    const s = Math.min(1, max / Math.max(sw, sh));
+    const c = document.createElement("canvas");
+    c.width = Math.round(sw * s); c.height = Math.round(sh * s);
+    const ctx = c.getContext("2d")!;
+    ctx.fillStyle = "#ffffff"; ctx.fillRect(0, 0, c.width, c.height);
+    ctx.drawImage(i, sx, sy, sw, sh, 0, 0, c.width, c.height);
+    r(c.toDataURL("image/jpeg", 0.9));
+  };
+  i.onerror = () => j(new Error("image decode failed"));
+  i.src = u;
+});
+const CODE_KEY = "eos-fal-code";
+const readCode = () => { try { return sessionStorage.getItem(CODE_KEY); } catch { return null; } };
 const downloadName = (dataUrl: string) => { const m = /^data:image\/(\w+)/.exec(dataUrl); const type = m?.[1]; return `eos-me.${type === "jpeg" ? "jpg" : type === "webp" ? "webp" : "png"}`; };
 
 function Tile({ id, big }: { id: string; big?: boolean }) {
@@ -79,6 +110,21 @@ export function Board() {
   const [notes, setNotes] = useState<string[]>([]);
   const [tmsg, setTmsg] = useState("");
   const [step, setStep] = useState("");
+  // Read once on the client; the code only shows inside the try-on window, so server and client markup agree.
+  const [code, setCode] = useState<string | null>(() => (typeof window === "undefined" ? null : readCode()));
+  const [codeInput, setCodeInput] = useState("");
+  const [codeOpen, setCodeOpen] = useState(false);
+  const [codeMsg, setCodeMsg] = useState("");
+
+  async function unlock() {
+    setCodeMsg("Checking…");
+    const { checkUnlock } = await import("@/lib/tryon/falClient");
+    const res = await checkUnlock(codeInput.trim());
+    if (!res.ok) { setCodeMsg(res.message ?? "That code isn't right."); return; }
+    try { sessionStorage.setItem(CODE_KEY, codeInput.trim()); } catch { /* private mode: keep it in memory only */ }
+    setCode(codeInput.trim()); setCodeInput(""); setCodeOpen(false); setCodeMsg("");
+  }
+  function lock() { try { sessionStorage.removeItem(CODE_KEY); } catch { /* ignore */ } setCode(null); }
   const runRef = useRef(0);
 
   function closeModal() { runRef.current++; setT("idle"); }
@@ -92,7 +138,7 @@ export function Board() {
     try {
       const [{ liveDeps }, { fitOne }] = await Promise.all([import("@/lib/tryon/live"), import("@/lib/tryon/fit")]);
       if (run !== runRef.current) return;
-      const deps = await liveDeps();
+      const deps = await liveDeps(code);
       if (run !== runRef.current) return;
       let current = person;
       const found: string[] = [];
@@ -170,8 +216,22 @@ export function Board() {
                     <span className="block text-sm font-medium">Choose a stock model</span>
                     <span className="block text-[11px] text-neutral-500">See the look without uploading anything</span>
                   </button>
+                  <div className="rounded-xl bg-neutral-50 px-3 py-2 text-center text-[11px] text-neutral-600">
+                    {code ? (<>
+                      <span className="font-medium">✓ Stronger model on</span> (fal.ai, faster and sharper){" "}
+                      <button onClick={lock} className="underline">turn off</button>
+                    </>) : codeOpen ? (
+                      <form onSubmit={(e) => { e.preventDefault(); unlock(); }} className="flex items-center gap-1.5">
+                        <input value={codeInput} onChange={(e) => setCodeInput(e.target.value)} type="password" inputMode="numeric" autoComplete="off" placeholder="Code" aria-label="Unlock code" className="min-w-0 flex-1 rounded-full border border-neutral-200 px-3 py-1 text-xs outline-none" />
+                        <button type="submit" className="rounded-full bg-neutral-900 px-3 py-1 text-xs text-white">Unlock</button>
+                      </form>
+                    ) : (
+                      <button onClick={() => setCodeOpen(true)} className="underline">Use a stronger model</button>
+                    )}
+                    {codeMsg && <span className="mt-1 block text-[10px] text-neutral-500">{codeMsg}</span>}
+                  </div>
                   <p className="pt-1 text-center text-[10px] text-neutral-400">
-                    Your photo goes straight from your browser to open try-on models on Hugging Face (or, if they&apos;re busy, our paid fallback). Eos never stores it.
+                    Your photo goes straight from your browser to open try-on models on Hugging Face, or to fal.ai when the stronger model is on. Eos never stores it.
                   </p>
                 </div>
               )}
