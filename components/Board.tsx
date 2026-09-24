@@ -212,6 +212,17 @@ export function Board() {
                     <span className="block text-[11px] text-neutral-500">A standing, front-facing photo works best</span>
                     <input type="file" accept="image/*" hidden onChange={(e) => { const f = e.target.files?.[0]; if (f) onFile(f); e.target.value = ""; }} />
                   </label>
+                  <div className="rounded-xl bg-amber-50 px-3 py-2 text-[11px] leading-relaxed text-amber-900">
+                    <p className="font-medium">For a good result, use a photo that is:</p>
+                    <ul className="mt-0.5 list-disc pl-4">
+                      <li>just you, standing and facing the camera</li>
+                      <li>full body, or at least down to the knees</li>
+                      <li>arms by your sides, not crossed or covering your clothes</li>
+                      <li>on a plain background, in good light</li>
+                      <li>in fitted clothes (loose layers confuse the model)</li>
+                    </ul>
+                    <p className="mt-1 text-amber-800">Avoid group photos, sitting poses, mirror selfies where the phone hides your body, and heavy filters. Sarees and long kurtis are the hardest for the models, so results vary.</p>
+                  </div>
                   <button onClick={() => setT("models")} className="block w-full rounded-xl border border-neutral-200 p-4 text-center transition hover:bg-neutral-50">
                     <span className="block text-sm font-medium">Choose a stock model</span>
                     <span className="block text-[11px] text-neutral-500">See the look without uploading anything</span>
