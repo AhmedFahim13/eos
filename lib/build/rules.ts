@@ -3,6 +3,7 @@
 import type { Slot } from "@/lib/catalog/slots";
 import type { Tag } from "./tags";
 import { mergeColors, type ColorRead } from "./colorPass";
+import { mergeStyles, stylesFromText } from "./styles";
 
 const has = (re: RegExp, s: string) => re.test(s);
 
@@ -19,6 +20,8 @@ export function slotFromText(name: string, hints: string): Slot | null {
   if (has(SAREE, t)) return "saree";
   if (has(SET3, t)) return "set3";
   if (has(SET2, t)) return "set2";
+  // A salwar kameez (set/suit) is at least kameez + salwar; with a dupatta or orna it is a three-piece.
+  if (/\bsalwar (kameez|suit)\b|\bkameez set\b/i.test(name)) return /\b(dupatta|orna|urna)\b/i.test(name) ? "set3" : "set2";
   if (has(KURTI, name)) return "kurti";
   const bottom = has(BOTTOM, name), top = has(TOP, name);
   if (bottom && top) return "set2";
@@ -57,5 +60,6 @@ export function applyRules(text: { name: string; hints: string }, tag: Tag, read
   const slot = slotFromText(text.name, text.hints) ?? tag.slot;
   const brand = colorFromText(text.name, text.hints);
   const colors = brand || read ? mergeColors(brand, read, tag.colors) : tag.colors;
-  return slot === tag.slot && colors === tag.colors ? tag : { ...tag, slot, colors };
+  const styles = mergeStyles(stylesFromText(text.name, text.hints), read?.styles);
+  return { ...tag, slot, colors, styles };
 }

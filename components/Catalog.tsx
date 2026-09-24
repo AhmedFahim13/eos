@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SLOTS, SLOT_TINT, searchPieces, imgUrl, useCatalog } from "@/lib/catalog";
 import { ARCHIVE_SLOTS } from "@/lib/catalog/archive";
@@ -13,7 +13,16 @@ export function Catalog() {
   const { broken, mark } = useBroken();
   useEffect(() => { load(); }, [load]);
   const panel = { background: "var(--panel)", color: "var(--text)" } as const;
-  const pieces = searchPieces(all, tab, query).filter((p) => !broken[p.id]);
+  // Style chips: the most common design names in this tab (weaves, crafts, cuts, fabrics).
+  const [style, setStyle] = useState<string | null>(null);
+  const [styleTab, setStyleTab] = useState(tab);
+  if (styleTab !== tab) { setStyleTab(tab); setStyle(null); }
+  const chips = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const p of all) if (p.slot === tab) for (const s of p.styles ?? []) counts.set(s, (counts.get(s) ?? 0) + 1);
+    return [...counts].filter(([, n]) => n >= 2).sort((a, b) => b[1] - a[1]).slice(0, 12).map(([s]) => s);
+  }, [all, tab]);
+  const pieces = searchPieces(all, tab, query).filter((p) => !broken[p.id] && (!style || (p.styles ?? []).includes(style)));
 
   return (
     <>
@@ -36,6 +45,24 @@ export function Catalog() {
             </button>
           ))}
         </div>
+
+        {chips.length > 0 && (
+          <div className="mb-2 flex gap-1 overflow-x-auto pb-1 text-[10px]">
+            {chips.map((c) => (
+              <button
+                key={c}
+                onClick={() => setStyle(style === c ? null : c)}
+                className="whitespace-nowrap rounded-full px-2.5 py-1 tracking-wide transition"
+                style={{
+                  background: style === c ? "var(--text)" : "rgba(128,128,128,0.12)",
+                  color: style === c ? "#fff" : "var(--text)",
+                }}
+              >
+                {c}
+              </button>
+            ))}
+          </div>
+        )}
 
         <input
           value={query}

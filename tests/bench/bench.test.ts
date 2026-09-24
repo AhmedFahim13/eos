@@ -8,7 +8,7 @@ import type { Slot } from "@/lib/catalog/slots";
 
 const mk = (id: string, slot: Slot): Piece => ({
   id, slot, name: id, brand: "B", url: "u", price: 1, image: "i", colors: [{ name: "red", hex: "#c0282d" }],
-  fabric: "cotton", work: "none", formality: 3, occasions: [], imageKind: "flat",
+  fabric: "cotton", work: "none", formality: 3, occasions: [], imageKind: "flat", styles: [],
 });
 
 describe("selectBenchPieces", () => {

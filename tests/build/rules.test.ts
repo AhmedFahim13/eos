@@ -20,6 +20,10 @@ describe("slotFromText", () => {
     expect(slotFromText("Polyester Blazer with Shiny Fabric Embellishment - Bling", "")).toBe("top");
     expect(slotFromText("Regular Fit Cap Sleeve T-Shirt with Sequin Front Yoke", "")).toBe("top");
   });
+  it("reads a salwar kameez set as a set, three-piece when it names a dupatta", () => {
+    expect(slotFromText("Maroon Linen Printed Salwar Kameez Set", "")).toBe("set2");
+    expect(slotFromText("Cotton Salwar Kameez with Dupatta", "")).toBe("set3");
+  });
   it("treats a named top-and-bottom pair as a two-piece", () => {
     expect(slotFromText("White Georgette Printed Top with Skirt", "")).toBe("set2");
   });
@@ -54,7 +58,11 @@ describe("applyRules", () => {
     expect(t.colors).toEqual(["ivory", "white", "black"]);
   });
   it("keeps the model's answer when the text says nothing", () => {
-    expect(applyRules({ name: "Digital Printed Long Dress", hints: "" }, tag)).toEqual(tag);
+    expect(applyRules({ name: "Plain Long Dress", hints: "" }, tag)).toEqual({ ...tag, styles: [] });
+  });
+  it("adds style tags from the brand text and the vision read", () => {
+    const t = applyRules({ name: "Dhakai Jamdani Saree", hints: "" }, { ...tag, slot: "saree" }, { primary: "red", secondary: [], styles: ["Zari"] });
+    expect(t.styles).toEqual(["Jamdani", "Zari"]);
   });
   it("never un-skips a piece the model rejected", () => {
     expect(applyRules({ name: "Boxer Two-Piece Pack", hints: "" }, { ...tag, slot: "skip" }).slot).toBe("skip");

@@ -63,6 +63,6 @@ export function searchPieces(pieces: Piece[], slot: Slot, q: string): Piece[] {
   return pieces.filter((p) => {
     if (p.slot !== slot) return false;
     if (!term) return true;
-    return `${p.name} ${p.brand} ${p.colors.map((c) => c.name).join(" ")}`.toLowerCase().includes(term);
+    return `${p.name} ${p.brand} ${p.colors.map((c) => c.name).join(" ")} ${(p.styles ?? []).join(" ")}`.toLowerCase().includes(term);
   });
 }

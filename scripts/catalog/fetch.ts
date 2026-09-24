@@ -1,6 +1,6 @@
 // scripts/catalog/fetch.ts — pull the brands' public feeds at one request per second.
 // Writes data/catalog/raw.json only when enough pieces came back, so a bad night keeps the last good file.
-import { mkdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { SOURCES, feedUrl, isWomens, pageLength, parseShopify, parseWoo, type RawPiece } from "@/lib/build/feeds";
 
 const UA = "EosCatalogBot/1.0 (+https://github.com/AhmedFahim13/eos)";
@@ -39,6 +39,23 @@ for (const src of SOURCES) {
     await sleep(1000);
   }
   console.log(`${src.brand}: ${kept} women's pieces of ${total}`);
+}
+
+// Shops without a product API, read from their product pages by scripts/catalog/pages.ts.
+const PAGES = "data/catalog/pages-cache.json";
+if (existsSync(PAGES)) {
+  const pages = Object.values(JSON.parse(readFileSync(PAGES, "utf8")) as Record<string, RawPiece | null>);
+  const counts: Record<string, [number, number]> = {};
+  for (const r of pages) {
+    if (!r) continue;
+    const c = (counts[r.brand] ??= [0, 0]);
+    c[1]++;
+    if (seen.has(r.id) || !isWomens(r)) continue;
+    seen.add(r.id);
+    out.push(r);
+    c[0]++;
+  }
+  for (const [brand, [kept, total]] of Object.entries(counts)) console.log(`${brand} (pages): ${kept} women's pieces of ${total}`);
 }
 
 if (out.length < MIN_PIECES) {

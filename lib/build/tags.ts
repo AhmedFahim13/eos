@@ -6,7 +6,7 @@ import type { RawPiece } from "./feeds";
 import { PALETTE } from "./palette";
 
 export { PALETTE };
-import { applyRules } from "./rules";
+import { applyRules, colorFromText, slotFromText } from "./rules";
 import type { ColorRead } from "./colorPass";
 
 
@@ -24,6 +24,8 @@ export interface Tag {
   tryon_image: number;
   image_kind: ImageKind;
   tryon_ok: boolean;
+  /** Filled by applyRules from the brand text and the vision pass; not asked of the main tagger. */
+  styles?: string[];
 }
 
 const str = (values: readonly string[]) => ({ type: "STRING", enum: [...values] });
@@ -116,13 +118,25 @@ export function toPiece(raw: RawPiece, tag: Tag): Piece | null {
     formality: tag.formality,
     occasions: tag.occasions,
     imageKind: tag.image_kind,
+    styles: tag.styles ?? [],
+  };
+}
+
+/** For a piece the vision tagger hasn't reached yet: only what the brand's own text states, or null. */
+export function textOnlyTag(raw: RawPiece): Tag | null {
+  const slot = slotFromText(raw.name, raw.hints);
+  if (!slot) return null;
+  const color = colorFromText(raw.name, raw.hints);
+  return {
+    slot, colors: color ? [color] : [], fabric: "unknown", work: "none", formality: 3, occasions: [],
+    tryon_image: 0, image_kind: "on_model", tryon_ok: true,
   };
 }
 
 export function buildCatalog(raws: RawPiece[], cache: Record<string, Tag>, colorCache: Record<string, ColorRead> = {}): Piece[] {
   const out: Piece[] = [];
   for (const r of raws) {
-    const tag = cache[tagKey(r)];
+    const tag = cache[tagKey(r)] ?? textOnlyTag(r);
     const piece = tag ? toPiece(r, applyRules(r, tag, colorCache[tagKey(r)] ?? null)) : null;
     if (piece) out.push(piece);
   }

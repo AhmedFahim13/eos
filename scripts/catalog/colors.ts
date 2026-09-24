@@ -29,7 +29,8 @@ const only = process.env.COLOR_ONLY === "labels"
 
 const todo = raws.filter((r) => {
   const t = tags[tagKey(r)];
-  return t && t.slot !== "skip" && !(tagKey(r) in cache) && (!only || only.has(r.id));
+  // Re-read pieces cached before style tags existed.
+  return t && t.slot !== "skip" && !cache[tagKey(r)]?.styles && (!only || only.has(r.id));
 }).slice(0, BUDGET);
 console.log(`colour reads: ${Object.keys(cache).length} cached, reading ${todo.length}`);
 

@@ -7,7 +7,7 @@ import { SLOT_NOUN, type Slot } from "@/lib/catalog/slots";
 export const metadata = { title: "Eos · Bangladeshi try-on benchmark" };
 
 interface Cell { provider: string; slot: Slot; attempts: number; generated: number; passed: number; generationRate: number; passRate: number }
-interface Results { generatedAt: string | null; runs: number; table: Cell[]; judge: { n: number; test: number } | null; tagger: { n: number; slotAccuracy: number; colorAgreement: number } | null }
+interface Results { generatedAt: string | null; runs: number; table: Cell[]; judge: { n: number; test: number } | null; tagger: { n: number; slotAccuracy: number; colorAgreement: number; colorFamilyAgreement: number } | null }
 interface GalleryItem { piece: string; slot: Slot; provider: string; image: string }
 
 const pct = (x: number) => `${Math.round(x * 100)}%`;
@@ -42,7 +42,7 @@ export default function BenchPage() {
       <ul className="mt-6 space-y-1 text-xs text-neutral-500">
         <li>{r.runs} runs{r.generatedAt ? `, updated ${r.generatedAt.slice(0, 10)}` : ""}.</li>
         <li>{r.judge ? `The judge agreed with a human rating on ${pct(r.judge.test)} of held-out outputs (${r.judge.n} rated).` : "Judge agreement with human ratings: not calibrated yet."}</li>
-        <li>{r.tagger ? `Catalog tagger: right garment type ${pct(r.tagger.slotAccuracy)}, right main colour ${pct(r.tagger.colorAgreement)} (checked against ${r.tagger.n} pieces labelled by a second AI model, Claude, not a person).` : "Tagger accuracy: not scored yet."}</li>
+        <li>{r.tagger ? `Catalog tagger (held-out test, ${r.tagger.n} pieces labelled blind by a second AI model, not a person): garment type ${pct(r.tagger.slotAccuracy)}, colour family ${pct(r.tagger.colorFamilyAgreement)}, exact shade ${pct(r.tagger.colorAgreement)}.` : "Tagger accuracy: not scored yet."}</li>
       </ul>
       {g.length > 0 && (
         <div className="mt-8 grid grid-cols-3 gap-2 sm:grid-cols-4">

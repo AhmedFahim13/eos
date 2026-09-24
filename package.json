@@ -12,6 +12,7 @@
     "test": "vitest run",
     "catalog:fetch": "node --env-file-if-exists=.env.local --import tsx scripts/catalog/fetch.ts",
     "catalog:tag": "node --env-file-if-exists=.env.local --import tsx scripts/catalog/tag.ts",
+    "catalog:pages": "node --env-file-if-exists=.env.local --import tsx scripts/catalog/pages.ts",
     "catalog:colors": "node --env-file-if-exists=.env.local --import tsx scripts/catalog/colors.ts",
     "catalog:eval": "node --env-file-if-exists=.env.local --import tsx scripts/catalog/eval.ts",
     "tryon:smoke": "node --env-file-if-exists=.env.local --import tsx scripts/tryon-smoke.ts",

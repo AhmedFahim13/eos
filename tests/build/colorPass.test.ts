@@ -4,8 +4,8 @@ import { mergeColors, normalizeColorRead } from "@/lib/build/colorPass";
 
 describe("normalizeColorRead", () => {
   it("keeps palette colours and drops the rest", () => {
-    expect(normalizeColorRead({ primary: "brown", secondary: ["maroon", "brown", "plaid", "gold", "red"] }))
-      .toEqual({ primary: "brown", secondary: ["maroon", "gold"] });
+    expect(normalizeColorRead({ primary: "brown", secondary: ["maroon", "brown", "plaid", "gold", "red"], styles: ["Embroidery", "Sheer"] }))
+      .toEqual({ primary: "brown", secondary: ["maroon", "gold"], styles: ["Embroidery"] });
   });
   it("rejects an unknown primary", () => {
     expect(normalizeColorRead({ primary: "taupe", secondary: [] })).toBeNull();

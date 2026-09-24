@@ -5,7 +5,7 @@ import { searchPieces, type Piece } from "@/lib/catalog";
 const piece = (over: Partial<Piece>): Piece => ({
   id: "a", slot: "saree", name: "Cotton Saree", brand: "Kay Kraft", url: "u", price: 4500, image: "i",
   colors: [{ name: "magenta", hex: "#b8246f" }], fabric: "cotton", work: "print", formality: 3,
-  occasions: ["eid"], imageKind: "flat", ...over,
+  occasions: ["eid"], imageKind: "flat", styles: [], ...over,
 });
 
 describe("searchPieces", () => {

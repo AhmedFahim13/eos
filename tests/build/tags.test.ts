@@ -58,8 +58,14 @@ describe("cache", () => {
     const cache: Record<string, Tag> = { [tagKey(raw)]: normalizeTag(good, 2)! };
     expect(selectUntagged([raw, b, c], cache, 1).map((r) => r.id)).toEqual(["b"]);
   });
-  it("builds the catalog from cached tags only", () => {
-    const b = { ...raw, id: "b" };
+  it("adds untagged pieces whose own name says what they are", () => {
+    const saree = { ...raw, id: "tsk-1", name: "Red Dhakai Jamdani Saree", hints: "Saree", images: ["https://i/s.jpg"] };
+    const [p] = buildCatalog([saree], {});
+    expect(p).toMatchObject({ id: "tsk-1", slot: "saree", image: "https://i/s.jpg", styles: ["Jamdani"] });
+    expect(p.colors.map((c) => c.name)).toEqual(["red"]);
+  });
+  it("builds the catalog from cached tags, skipping unclear untagged pieces", () => {
+    const b = { ...raw, id: "b", name: "Evening Collection 2026" };
     const cache: Record<string, Tag> = { [tagKey(raw)]: normalizeTag(good, 2)! };
     expect(buildCatalog([raw, b], cache).map((p) => p.id)).toEqual(["yellow-11"]);
   });
