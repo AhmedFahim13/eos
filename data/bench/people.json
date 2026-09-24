@@ -1,0 +1,4 @@
+[
+  { "id": "p01", "file": "public/samples/model-1.jpg", "source": "https://www.pexels.com/photo/a-woman-wearing-a-black-tank-top-and-denim-pants-5957081/", "license": "Pexels License", "credit": "Tanya Varshney" },
+  { "id": "p02", "file": "public/samples/model-2.jpg", "source": "https://www.pexels.com/photo/a-woman-in-white-shirt-and-black-pants-standing-10479439/", "license": "Pexels License", "credit": "Eduardo Eugenio Padron" }
+]

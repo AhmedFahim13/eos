@@ -1,0 +1,36 @@
+name: bench
+on:
+  schedule:
+    - cron: "30 22 * * *" # 04:30 Dhaka, after the quota resets
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: bench
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm }
+      - run: npm ci
+      - name: Run today's share of the benchmark
+        run: npm run bench:run
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          BENCH_MAX_RUNS: "12"
+      - name: Rebuild report
+        run: npm run bench:report
+      - name: Commit
+        run: |
+          git config user.name "eos-bot"
+          git config user.email "eos-bot@users.noreply.github.com"
+          git add data/bench public/bench docs/bench.md
+          git diff --cached --quiet -- data/bench/runs.json && exit 0
+          git diff --cached --quiet && exit 0
+          git commit -m "bench: daily runs"
+          git pull --rebase --autostash
+          git push

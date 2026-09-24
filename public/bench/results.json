@@ -1,0 +1,74 @@
+{
+  "generatedAt": "2026-09-24T04:31:04.669Z",
+  "runs": 6,
+  "table": [
+    {
+      "provider": "ootd",
+      "slot": "saree",
+      "attempts": 2,
+      "generated": 2,
+      "passed": 2,
+      "generationRate": 1,
+      "passRate": 1
+    },
+    {
+      "provider": "idm",
+      "slot": "saree",
+      "attempts": 2,
+      "generated": 2,
+      "passed": 2,
+      "generationRate": 1,
+      "passRate": 1
+    },
+    {
+      "provider": "ootd",
+      "slot": "set3",
+      "attempts": 1,
+      "generated": 1,
+      "passed": 1,
+      "generationRate": 1,
+      "passRate": 1
+    },
+    {
+      "provider": "idm",
+      "slot": "set3",
+      "attempts": 1,
+      "generated": 1,
+      "passed": 0,
+      "generationRate": 1,
+      "passRate": 0
+    }
+  ],
+  "judge": null,
+  "tagger": {
+    "n": 60,
+    "slotAccuracy": 0.9833333333333333,
+    "colorAgreement": 0.6833333333333333,
+    "colorFamilyAgreement": 0.85,
+    "occasionPrecision": 0.4644808743169399,
+    "occasionRecall": 0.7727272727272727,
+    "confusion": {
+      "top": {
+        "top": 10
+      },
+      "kurti": {
+        "kurti": 18,
+        "set3": 1
+      },
+      "set3": {
+        "set3": 9
+      },
+      "saree": {
+        "saree": 6
+      },
+      "bottom": {
+        "bottom": 13
+      },
+      "set2": {
+        "set2": 3
+      }
+    },
+    "set": "held-out test",
+    "scoredAt": "2026-09-24T04:29:24.784Z"
+  }
+}

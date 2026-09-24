@@ -2,22 +2,26 @@
 import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SLOTS, SLOT_TINT, searchPieces, imgUrl, useCatalog } from "@/lib/catalog";
+import { ARCHIVE_SLOTS } from "@/lib/catalog/archive";
 import { usePhoto } from "@/lib/photostore";
+import { useBroken } from "@/lib/brokenImages";
 
 export function Catalog() {
   const { equipped, tab, setTab, query, setQuery, pick, savedLooks, loadLook, deleteLook } = usePhoto();
-  const { pieces: all, status, load } = useCatalog();
+  const { pieces: all, status, load, source } = useCatalog();
+  const tabs = source === "archive" ? ARCHIVE_SLOTS : SLOTS;
+  const { broken, mark } = useBroken();
   useEffect(() => { load(); }, [load]);
   const panel = { background: "var(--panel)", color: "var(--text)" } as const;
-  const pieces = searchPieces(all, tab, query);
+  const pieces = searchPieces(all, tab, query).filter((p) => !broken[p.id]);
 
   return (
     <>
       <aside className="pointer-events-auto absolute right-3 top-20 bottom-24 flex w-72 flex-col rounded-2xl p-3 backdrop-blur-xl shadow-xl md:right-6 md:w-80" style={panel}>
-        <h2 className="mb-2 px-1 font-serif text-lg tracking-wide">Wardrobe</h2>
+        <h2 className="mb-2 px-1 font-serif text-lg tracking-wide">{source === "archive" ? "Archive" : "Wardrobe"}</h2>
 
         <div className="mb-2 flex gap-1 overflow-x-auto pb-1 text-[11px]">
-          {SLOTS.map(({ slot, label }) => (
+          {tabs.map(({ slot, label }) => (
             <button
               key={slot}
               onClick={() => setTab(slot)}
@@ -53,9 +57,12 @@ export function Catalog() {
               >
                 <div className="flex h-32 w-full items-center justify-center p-1">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={imgUrl(p.image)} alt={p.name} loading="lazy" className="max-h-full max-w-full object-contain" />
+                  <img src={imgUrl(p.image)} alt={p.name} loading="lazy" onError={() => mark(p.id)} className="max-h-full max-w-full object-contain" />
                 </div>
-                <span className="block truncate bg-white/70 px-1.5 py-1 text-[10px] font-medium tracking-wide text-neutral-700">{p.name}</span>
+                <span className="block truncate bg-white/70 px-1.5 pt-1 text-[10px] font-medium tracking-wide text-neutral-700">{p.name}</span>
+                <span className="block truncate bg-white/70 px-1.5 pb-1 text-[9px] tracking-wide text-neutral-500">
+                  {p.brand}{p.price ? ` · ৳${p.price.toLocaleString("en-IN")}` : ""}
+                </span>
                 {on && (
                   <span className="absolute right-1 top-1 rounded-full px-1.5 py-0.5 text-[9px] text-white" style={{ background: "var(--accent)" }}>✓</span>
                 )}

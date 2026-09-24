@@ -1,0 +1,92 @@
+[
+ {
+  "key": "p01|yellow-9254931824892|ootd",
+  "person": "p01",
+  "piece": "yellow-9254931824892",
+  "slot": "saree",
+  "provider": "ootd",
+  "seconds": 18.492,
+  "ok": true,
+  "metrics": {
+   "colorCoverage": 0.37996031746031744,
+   "headSimilarity": 0.984375,
+   "change": 17.459503923068397
+  },
+  "image": "/bench/img/p01-yellow-9254931824892-ootd.jpg"
+ },
+ {
+  "key": "p01|yellow-9254931824892|idm",
+  "person": "p01",
+  "piece": "yellow-9254931824892",
+  "slot": "saree",
+  "provider": "idm",
+  "seconds": 38.748,
+  "ok": true,
+  "metrics": {
+   "colorCoverage": 0.36061507936507936,
+   "headSimilarity": 0.984375,
+   "change": 8.485949652345337
+  },
+  "image": "/bench/img/p01-yellow-9254931824892-idm.jpg"
+ },
+ {
+  "key": "p01|yellow-9332385480956|ootd",
+  "person": "p01",
+  "piece": "yellow-9332385480956",
+  "slot": "saree",
+  "provider": "ootd",
+  "seconds": 14.692,
+  "ok": true,
+  "metrics": {
+   "colorCoverage": 0.2767857142857143,
+   "headSimilarity": 0.96875,
+   "change": 18.84943772255625
+  },
+  "image": "/bench/img/p01-yellow-9332385480956-ootd.jpg"
+ },
+ {
+  "key": "p01|yellow-9332385480956|idm",
+  "person": "p01",
+  "piece": "yellow-9332385480956",
+  "slot": "saree",
+  "provider": "idm",
+  "seconds": 21.212,
+  "ok": true,
+  "metrics": {
+   "colorCoverage": 0.3958333333333333,
+   "headSimilarity": 0.984375,
+   "change": 10.827631076038362
+  },
+  "image": "/bench/img/p01-yellow-9332385480956-idm.jpg"
+ },
+ {
+  "key": "p01|twelve-8843499798754|ootd",
+  "person": "p01",
+  "piece": "twelve-8843499798754",
+  "slot": "set3",
+  "provider": "ootd",
+  "seconds": 14.32,
+  "ok": true,
+  "metrics": {
+   "colorCoverage": 0.11408730158730158,
+   "headSimilarity": 0.96875,
+   "change": 26.36079059328576
+  },
+  "image": "/bench/img/p01-twelve-8843499798754-ootd.jpg"
+ },
+ {
+  "key": "p01|twelve-8843499798754|idm",
+  "person": "p01",
+  "piece": "twelve-8843499798754",
+  "slot": "set3",
+  "provider": "idm",
+  "seconds": 29.801,
+  "ok": true,
+  "metrics": {
+   "colorCoverage": 0.07093253968253968,
+   "headSimilarity": 0.96875,
+   "change": 9.54819506514492
+  },
+  "image": "/bench/img/p01-twelve-8843499798754-idm.jpg"
+ }
+]
