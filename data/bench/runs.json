@@ -88,5 +88,164 @@
    "change": 9.54819506514492
   },
   "image": "/bench/img/p01-twelve-8843499798754-idm.jpg"
+ },
+ {
+  "key": "p01|yellow-9240946114812|ootd",
+  "person": "p01",
+  "piece": "yellow-9240946114812",
+  "slot": "set3",
+  "provider": "ootd",
+  "seconds": 16.889,
+  "ok": true,
+  "metrics": {
+   "colorCoverage": 0.25396825396825395,
+   "headSimilarity": 0.9375,
+   "change": 30.875121489264206,
+   "lowerCoverage": 0.021724137931034483,
+   "lowerChange": 17.45375156539625,
+   "lowerNeedsColour": false
+  },
+  "image": "/bench/img/p01-yellow-9240946114812-ootd.jpg"
+ },
+ {
+  "key": "p01|yellow-9416703541500|ootd",
+  "person": "p01",
+  "piece": "yellow-9416703541500",
+  "slot": "set2",
+  "provider": "ootd",
+  "seconds": 8.687,
+  "ok": true,
+  "metrics": {
+   "colorCoverage": 0.2698412698412698,
+   "headSimilarity": 0.984375,
+   "change": 17.941045478938218,
+   "lowerCoverage": 0.23241379310344829,
+   "lowerChange": 13.756744762037052,
+   "lowerNeedsColour": false
+  },
+  "image": "/bench/img/p01-yellow-9416703541500-ootd.jpg"
+ },
+ {
+  "key": "p01|yellow-9251028009212|ootd",
+  "person": "p01",
+  "piece": "yellow-9251028009212",
+  "slot": "set2",
+  "provider": "ootd",
+  "seconds": 8.39,
+  "ok": true,
+  "metrics": {
+   "colorCoverage": 0.5252976190476191,
+   "headSimilarity": 0.96875,
+   "change": 19.455684557998204,
+   "lowerCoverage": 0.48758620689655174,
+   "lowerChange": 16.19990484576204,
+   "lowerNeedsColour": false
+  },
+  "image": "/bench/img/p01-yellow-9251028009212-ootd.jpg"
+ },
+ {
+  "key": "p01|twelve-9281198260450|ootd",
+  "person": "p01",
+  "piece": "twelve-9281198260450",
+  "slot": "bottom",
+  "provider": "ootd",
+  "seconds": 8.413,
+  "ok": true,
+  "metrics": {
+   "colorCoverage": 0.42857142857142855,
+   "headSimilarity": 1,
+   "change": 12.102415671711707
+  },
+  "image": "/bench/img/p01-twelve-9281198260450-ootd.jpg"
+ },
+ {
+  "key": "p01|yellow-9160685584636|ootd",
+  "person": "p01",
+  "piece": "yellow-9160685584636",
+  "slot": "bottom",
+  "provider": "ootd",
+  "seconds": 8.775,
+  "ok": true,
+  "metrics": {
+   "colorCoverage": 0.6203132415757,
+   "headSimilarity": 1,
+   "change": 16.100744819914432
+  },
+  "image": "/bench/img/p01-yellow-9160685584636-ootd.jpg"
+ },
+ {
+  "key": "p01|yellow-9240949031164|ootd",
+  "person": "p01",
+  "piece": "yellow-9240949031164",
+  "slot": "kurti",
+  "provider": "ootd",
+  "seconds": 8.351,
+  "ok": true,
+  "metrics": {
+   "colorCoverage": 0.14942528735632185,
+   "headSimilarity": 0.9375,
+   "change": 22.54138772896735
+  },
+  "image": "/bench/img/p01-yellow-9240949031164-ootd.jpg"
+ },
+ {
+  "key": "p01|yellow-9240949031164|idm",
+  "person": "p01",
+  "piece": "yellow-9240949031164",
+  "slot": "kurti",
+  "provider": "idm",
+  "seconds": 22.143,
+  "ok": true,
+  "metrics": {
+   "colorCoverage": 0.11159003831417624,
+   "headSimilarity": 0.984375,
+   "change": 17.862380151222034
+  },
+  "image": "/bench/img/p01-yellow-9240949031164-idm.jpg"
+ },
+ {
+  "key": "p01|yellow-9148020228348|ootd",
+  "person": "p01",
+  "piece": "yellow-9148020228348",
+  "slot": "kurti",
+  "provider": "ootd",
+  "seconds": 8.805,
+  "ok": true,
+  "metrics": {
+   "colorCoverage": 0.6726532567049809,
+   "headSimilarity": 0.96875,
+   "change": 22.68950235593447
+  },
+  "image": "/bench/img/p01-yellow-9148020228348-ootd.jpg"
+ },
+ {
+  "key": "p01|yellow-9148020228348|idm",
+  "person": "p01",
+  "piece": "yellow-9148020228348",
+  "slot": "kurti",
+  "provider": "idm",
+  "seconds": 22.91,
+  "ok": true,
+  "metrics": {
+   "colorCoverage": 0.6764846743295019,
+   "headSimilarity": 0.984375,
+   "change": 19.737319234701562
+  },
+  "image": "/bench/img/p01-yellow-9148020228348-idm.jpg"
+ },
+ {
+  "key": "p01|yellow-9186188493052|idm",
+  "person": "p01",
+  "piece": "yellow-9186188493052",
+  "slot": "top",
+  "provider": "idm",
+  "seconds": 13.898,
+  "ok": true,
+  "metrics": {
+   "colorCoverage": 0.3424329501915709,
+   "headSimilarity": 0.96875,
+   "change": 11.296369202807911
+  },
+  "image": "/bench/img/p01-yellow-9186188493052-idm.jpg"
  }
 ]

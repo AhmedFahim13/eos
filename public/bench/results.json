@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-24T08:10:23.309Z",
-  "runs": 6,
+  "generatedAt": "2026-09-25T00:39:54.878Z",
+  "runs": 16,
   "table": [
     {
       "provider": "ootd",
@@ -23,9 +23,9 @@
     {
       "provider": "ootd",
       "slot": "set3",
-      "attempts": 1,
-      "generated": 1,
-      "passed": 1,
+      "attempts": 2,
+      "generated": 2,
+      "passed": 2,
       "generationRate": 1,
       "passRate": 1
     },
@@ -37,6 +37,51 @@
       "passed": 0,
       "generationRate": 1,
       "passRate": 0
+    },
+    {
+      "provider": "ootd",
+      "slot": "set2",
+      "attempts": 2,
+      "generated": 2,
+      "passed": 2,
+      "generationRate": 1,
+      "passRate": 1
+    },
+    {
+      "provider": "ootd",
+      "slot": "bottom",
+      "attempts": 2,
+      "generated": 2,
+      "passed": 2,
+      "generationRate": 1,
+      "passRate": 1
+    },
+    {
+      "provider": "ootd",
+      "slot": "kurti",
+      "attempts": 2,
+      "generated": 2,
+      "passed": 2,
+      "generationRate": 1,
+      "passRate": 1
+    },
+    {
+      "provider": "idm",
+      "slot": "kurti",
+      "attempts": 2,
+      "generated": 2,
+      "passed": 2,
+      "generationRate": 1,
+      "passRate": 1
+    },
+    {
+      "provider": "idm",
+      "slot": "top",
+      "attempts": 1,
+      "generated": 1,
+      "passed": 1,
+      "generationRate": 1,
+      "passRate": 1
     }
   ],
   "judge": null,
