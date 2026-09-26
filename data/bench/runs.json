@@ -247,5 +247,140 @@
    "change": 11.296369202807911
   },
   "image": "/bench/img/p01-yellow-9186188493052-idm.jpg"
+ },
+ {
+  "key": "p01|yellow-9186188493052|ootd",
+  "person": "p01",
+  "piece": "yellow-9186188493052",
+  "slot": "top",
+  "provider": "ootd",
+  "seconds": 12.396,
+  "ok": true,
+  "metrics": {
+   "colorCoverage": 0.2952586206896552,
+   "headSimilarity": 0.96875,
+   "change": 11.486922330726602
+  },
+  "image": "/bench/img/p01-yellow-9186188493052-ootd.jpg"
+ },
+ {
+  "key": "p01|yellow-9319936065788|idm",
+  "person": "p01",
+  "piece": "yellow-9319936065788",
+  "slot": "top",
+  "provider": "idm",
+  "seconds": 12.974,
+  "ok": true,
+  "metrics": {
+   "colorCoverage": 0.5739942528735632,
+   "headSimilarity": 0.96875,
+   "change": 22.8837146842526
+  },
+  "image": "/bench/img/p01-yellow-9319936065788-idm.jpg"
+ },
+ {
+  "key": "p01|yellow-9319936065788|ootd",
+  "person": "p01",
+  "piece": "yellow-9319936065788",
+  "slot": "top",
+  "provider": "ootd",
+  "seconds": 7.648,
+  "ok": true,
+  "metrics": {
+   "colorCoverage": 0.42432950191570884,
+   "headSimilarity": 0.953125,
+   "change": 23.420205194653565
+  },
+  "image": "/bench/img/p01-yellow-9319936065788-ootd.jpg"
+ },
+ {
+  "key": "p02|yellow-9254931824892|ootd",
+  "person": "p02",
+  "piece": "yellow-9254931824892",
+  "slot": "saree",
+  "provider": "ootd",
+  "seconds": 7.32,
+  "ok": true,
+  "metrics": {
+   "colorCoverage": 0.032242063492063495,
+   "headSimilarity": 0.984375,
+   "change": 9.453761888517544,
+   "lowerCoverage": 0.007931034482758621,
+   "lowerChange": 7.003674758912449,
+   "lowerNeedsColour": true
+  },
+  "image": "/bench/img/p02-yellow-9254931824892-ootd.jpg"
+ },
+ {
+  "key": "p02|yellow-9332385480956|ootd",
+  "person": "p02",
+  "piece": "yellow-9332385480956",
+  "slot": "saree",
+  "provider": "ootd",
+  "seconds": 7.246,
+  "ok": true,
+  "metrics": {
+   "colorCoverage": 0.17113095238095238,
+   "headSimilarity": 1,
+   "change": 13.956788170058246,
+   "lowerCoverage": 0.15689655172413794,
+   "lowerChange": 12.976669803470871,
+   "lowerNeedsColour": true
+  },
+  "image": "/bench/img/p02-yellow-9332385480956-ootd.jpg"
+ },
+ {
+  "key": "p02|twelve-8843499798754|ootd",
+  "person": "p02",
+  "piece": "twelve-8843499798754",
+  "slot": "set3",
+  "provider": "ootd",
+  "seconds": 7.045,
+  "ok": true,
+  "metrics": {
+   "colorCoverage": 0.08531746031746032,
+   "headSimilarity": 1,
+   "change": 11.019275381539995,
+   "lowerCoverage": 0.01793103448275862,
+   "lowerChange": 9.242316924222866,
+   "lowerNeedsColour": false
+  },
+  "image": "/bench/img/p02-twelve-8843499798754-ootd.jpg"
+ },
+ {
+  "key": "p02|yellow-9240946114812|ootd",
+  "person": "p02",
+  "piece": "yellow-9240946114812",
+  "slot": "set3",
+  "provider": "ootd",
+  "seconds": 7.077,
+  "ok": true,
+  "metrics": {
+   "colorCoverage": 0,
+   "headSimilarity": 0.984375,
+   "change": 7.808661304663578,
+   "lowerCoverage": 0,
+   "lowerChange": 9.892686485322963,
+   "lowerNeedsColour": false
+  },
+  "image": "/bench/img/p02-yellow-9240946114812-ootd.jpg"
+ },
+ {
+  "key": "p02|yellow-9416703541500|ootd",
+  "person": "p02",
+  "piece": "yellow-9416703541500",
+  "slot": "set2",
+  "provider": "ootd",
+  "seconds": 7.176,
+  "ok": true,
+  "metrics": {
+   "colorCoverage": 0.02132936507936508,
+   "headSimilarity": 0.984375,
+   "change": 10.1619726132844,
+   "lowerCoverage": 0.011379310344827587,
+   "lowerChange": 12.189977399718984,
+   "lowerNeedsColour": false
+  },
+  "image": "/bench/img/p02-yellow-9416703541500-ootd.jpg"
  }
 ]

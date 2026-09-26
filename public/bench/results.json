@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-09-25T00:39:54.878Z",
-  "runs": 16,
+  "generatedAt": "2026-09-26T00:43:36.772Z",
+  "runs": 24,
   "table": [
     {
       "provider": "ootd",
       "slot": "saree",
-      "attempts": 2,
-      "generated": 2,
-      "passed": 2,
+      "attempts": 4,
+      "generated": 4,
+      "passed": 3,
       "generationRate": 1,
-      "passRate": 1
+      "passRate": 0.75
     },
     {
       "provider": "idm",
@@ -23,11 +23,11 @@
     {
       "provider": "ootd",
       "slot": "set3",
-      "attempts": 2,
-      "generated": 2,
+      "attempts": 4,
+      "generated": 4,
       "passed": 2,
       "generationRate": 1,
-      "passRate": 1
+      "passRate": 0.5
     },
     {
       "provider": "idm",
@@ -41,11 +41,11 @@
     {
       "provider": "ootd",
       "slot": "set2",
-      "attempts": 2,
-      "generated": 2,
+      "attempts": 3,
+      "generated": 3,
       "passed": 2,
       "generationRate": 1,
-      "passRate": 1
+      "passRate": 0.6666666666666666
     },
     {
       "provider": "ootd",
@@ -77,9 +77,18 @@
     {
       "provider": "idm",
       "slot": "top",
-      "attempts": 1,
-      "generated": 1,
-      "passed": 1,
+      "attempts": 2,
+      "generated": 2,
+      "passed": 2,
+      "generationRate": 1,
+      "passRate": 1
+    },
+    {
+      "provider": "ootd",
+      "slot": "top",
+      "attempts": 2,
+      "generated": 2,
+      "passed": 2,
       "generationRate": 1,
       "passRate": 1
     }
