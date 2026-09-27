@@ -1,6 +1,6 @@
 # How open try-on models handle Bangladeshi clothing
 
-Runs so far: 24. Updated 2026-09-26. Live page: /bench.
+Runs so far: 32. Updated 2026-09-27. Live page: /bench.
 
 | model | garment | attempts | generated | judged right |
 |---|---|---|---|---|
@@ -8,11 +8,11 @@ Runs so far: 24. Updated 2026-09-26. Live page: /bench.
 | IDM-VTON | saree | 2 | 100% | 100% |
 | OOTDiffusion | three-piece salwar kameez | 4 | 100% | 50% |
 | IDM-VTON | three-piece salwar kameez | 1 | 100% | 0% |
-| OOTDiffusion | two-piece set | 3 | 100% | 67% |
-| OOTDiffusion | bottom | 2 | 100% | 100% |
-| OOTDiffusion | kurti | 2 | 100% | 100% |
-| IDM-VTON | kurti | 2 | 100% | 100% |
-| IDM-VTON | top | 2 | 100% | 100% |
+| OOTDiffusion | two-piece set | 4 | 100% | 50% |
+| OOTDiffusion | bottom | 4 | 100% | 50% |
+| OOTDiffusion | kurti | 4 | 100% | 50% |
+| IDM-VTON | kurti | 4 | 100% | 75% |
+| IDM-VTON | top | 3 | 100% | 100% |
 | OOTDiffusion | top | 2 | 100% | 100% |
 
 ## Method

@@ -382,5 +382,128 @@
    "lowerNeedsColour": false
   },
   "image": "/bench/img/p02-yellow-9416703541500-ootd.jpg"
+ },
+ {
+  "key": "p02|yellow-9251028009212|ootd",
+  "person": "p02",
+  "piece": "yellow-9251028009212",
+  "slot": "set2",
+  "provider": "ootd",
+  "seconds": 12.022,
+  "ok": true,
+  "metrics": {
+   "colorCoverage": 0.06597222222222222,
+   "headSimilarity": 1,
+   "change": 8.46195700755918,
+   "lowerCoverage": 0.04206896551724138,
+   "lowerChange": 9.54438737479723,
+   "lowerNeedsColour": false
+  },
+  "image": "/bench/img/p02-yellow-9251028009212-ootd.jpg"
+ },
+ {
+  "key": "p02|twelve-9281198260450|ootd",
+  "person": "p02",
+  "piece": "twelve-9281198260450",
+  "slot": "bottom",
+  "provider": "ootd",
+  "seconds": 7.613,
+  "ok": true,
+  "metrics": {
+   "colorCoverage": 0.9606074988134788,
+   "headSimilarity": 0.96875,
+   "change": 7.806978651693581
+  },
+  "image": "/bench/img/p02-twelve-9281198260450-ootd.jpg"
+ },
+ {
+  "key": "p02|yellow-9160685584636|ootd",
+  "person": "p02",
+  "piece": "yellow-9160685584636",
+  "slot": "bottom",
+  "provider": "ootd",
+  "seconds": 7.928,
+  "ok": true,
+  "metrics": {
+   "colorCoverage": 0.04224015187470337,
+   "headSimilarity": 0.984375,
+   "change": 8.767307577858485
+  },
+  "image": "/bench/img/p02-yellow-9160685584636-ootd.jpg"
+ },
+ {
+  "key": "p02|yellow-9240949031164|ootd",
+  "person": "p02",
+  "piece": "yellow-9240949031164",
+  "slot": "kurti",
+  "provider": "ootd",
+  "seconds": 7.37,
+  "ok": true,
+  "metrics": {
+   "colorCoverage": 0.04693486590038314,
+   "headSimilarity": 1,
+   "change": 7.9610127852827075
+  },
+  "image": "/bench/img/p02-yellow-9240949031164-ootd.jpg"
+ },
+ {
+  "key": "p02|yellow-9240949031164|idm",
+  "person": "p02",
+  "piece": "yellow-9240949031164",
+  "slot": "kurti",
+  "provider": "idm",
+  "seconds": 20.682,
+  "ok": true,
+  "metrics": {
+   "colorCoverage": 0.05172413793103448,
+   "headSimilarity": 1,
+   "change": 6.493601294488302
+  },
+  "image": "/bench/img/p02-yellow-9240949031164-idm.jpg"
+ },
+ {
+  "key": "p02|yellow-9148020228348|ootd",
+  "person": "p02",
+  "piece": "yellow-9148020228348",
+  "slot": "kurti",
+  "provider": "ootd",
+  "seconds": 7.796,
+  "ok": true,
+  "metrics": {
+   "colorCoverage": 0.13840996168582376,
+   "headSimilarity": 0.984375,
+   "change": 7.243680486539851
+  },
+  "image": "/bench/img/p02-yellow-9148020228348-ootd.jpg"
+ },
+ {
+  "key": "p02|yellow-9148020228348|idm",
+  "person": "p02",
+  "piece": "yellow-9148020228348",
+  "slot": "kurti",
+  "provider": "idm",
+  "seconds": 12.934,
+  "ok": true,
+  "metrics": {
+   "colorCoverage": 0.11278735632183907,
+   "headSimilarity": 0.984375,
+   "change": 8.494477553329128
+  },
+  "image": "/bench/img/p02-yellow-9148020228348-idm.jpg"
+ },
+ {
+  "key": "p02|yellow-9186188493052|idm",
+  "person": "p02",
+  "piece": "yellow-9186188493052",
+  "slot": "top",
+  "provider": "idm",
+  "seconds": 13.007,
+  "ok": true,
+  "metrics": {
+   "colorCoverage": 0.1439176245210728,
+   "headSimilarity": 0.984375,
+   "change": 8.504275688965432
+  },
+  "image": "/bench/img/p02-yellow-9186188493052-idm.jpg"
  }
 ]
