@@ -1,6 +1,6 @@
 # How open try-on models handle Bangladeshi clothing
 
-Runs so far: 32. Updated 2026-09-27. Live page: /bench.
+Runs so far: 35. Updated 2026-09-28. Live page: /bench.
 
 | model | garment | attempts | generated | judged right |
 |---|---|---|---|---|
@@ -12,8 +12,8 @@ Runs so far: 32. Updated 2026-09-27. Live page: /bench.
 | OOTDiffusion | bottom | 4 | 100% | 50% |
 | OOTDiffusion | kurti | 4 | 100% | 50% |
 | IDM-VTON | kurti | 4 | 100% | 75% |
-| IDM-VTON | top | 3 | 100% | 100% |
-| OOTDiffusion | top | 2 | 100% | 100% |
+| IDM-VTON | top | 4 | 100% | 75% |
+| OOTDiffusion | top | 4 | 100% | 50% |
 
 ## Method
 

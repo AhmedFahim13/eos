@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-27T00:45:23.992Z",
-  "runs": 32,
+  "generatedAt": "2026-09-28T00:57:26.307Z",
+  "runs": 35,
   "table": [
     {
       "provider": "ootd",
@@ -77,20 +77,20 @@
     {
       "provider": "idm",
       "slot": "top",
-      "attempts": 3,
-      "generated": 3,
+      "attempts": 4,
+      "generated": 4,
       "passed": 3,
       "generationRate": 1,
-      "passRate": 1
+      "passRate": 0.75
     },
     {
       "provider": "ootd",
       "slot": "top",
-      "attempts": 2,
-      "generated": 2,
+      "attempts": 4,
+      "generated": 4,
       "passed": 2,
       "generationRate": 1,
-      "passRate": 1
+      "passRate": 0.5
     }
   ],
   "judge": null,
