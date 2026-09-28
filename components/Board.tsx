@@ -176,7 +176,7 @@ export function Board() {
   }
 
   return (
-    <div className="pointer-events-none absolute inset-0 flex items-center justify-center px-4 pb-28 pt-24 md:pr-[22rem]">
+    <div className="pointer-events-none absolute inset-0 flex items-center justify-center px-4 pb-48 pt-24 md:pb-28 md:pr-[22rem]">
       <div className="pointer-events-auto flex w-full max-w-md flex-col items-center gap-3">
         {any ? (
           <div className="w-full rounded-3xl p-4 shadow-2xl backdrop-blur-xl" style={{ background: "var(--panel)" }}>

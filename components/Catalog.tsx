@@ -24,10 +24,24 @@ export function Catalog() {
   }, [all, tab]);
   const pieces = searchPieces(all, tab, query).filter((p) => !broken[p.id] && (!style || (p.styles ?? []).includes(style)));
 
+  // Phones: the wardrobe is a bottom sheet opened by a button and closed after a pick, so the board stays
+  // visible. From md up it is the fixed side panel it always was.
+  const [sheetOpen, setSheetOpen] = useState(false);
+  const isPhone = () => typeof window !== "undefined" && window.matchMedia("(max-width: 767px)").matches;
+  const choose = (id: string) => { pick(id); if (isPhone()) setSheetOpen(false); };
+
   return (
     <>
-      <aside className="pointer-events-auto absolute right-3 top-20 bottom-24 flex w-72 flex-col rounded-2xl p-3 backdrop-blur-xl shadow-xl md:right-6 md:w-80" style={panel}>
-        <h2 className="mb-2 px-1 font-serif text-lg tracking-wide">{source === "archive" ? "Archive" : "Wardrobe"}</h2>
+      {!sheetOpen && (
+        <button onClick={() => setSheetOpen(true)} className="pointer-events-auto absolute bottom-36 right-3 z-20 rounded-full px-4 py-2 text-xs uppercase tracking-widest shadow-lg backdrop-blur-xl md:hidden" style={panel}>
+          {source === "archive" ? "Archive" : "Wardrobe"} ▴
+        </button>
+      )}
+      <aside className={`pointer-events-auto absolute inset-x-3 bottom-3 z-30 h-[68dvh] flex-col rounded-2xl p-3 shadow-xl backdrop-blur-xl md:inset-x-auto md:right-6 md:top-20 md:bottom-24 md:z-auto md:h-auto md:w-80 md:flex ${sheetOpen ? "flex" : "hidden"}`} style={panel}>
+        <div className="mb-2 flex items-center justify-between px-1">
+          <h2 className="font-serif text-lg tracking-wide">{source === "archive" ? "Archive" : "Wardrobe"}</h2>
+          <button onClick={() => setSheetOpen(false)} aria-label="Close wardrobe" className="rounded-full px-2 text-lg opacity-60 md:hidden">×</button>
+        </div>
 
         <div className="mb-2 flex gap-1 overflow-x-auto pb-1 text-[11px]">
           {tabs.map(({ slot, label }) => (
@@ -78,7 +92,7 @@ export function Catalog() {
             return (
               <button
                 key={p.id}
-                onClick={() => pick(p.id)}
+                onClick={() => choose(p.id)}
                 className="group relative block overflow-hidden rounded-xl text-left transition hover:z-10 hover:scale-[1.06] hover:shadow-lg"
                 style={{ background: SLOT_TINT[p.slot], outline: on ? "2px solid var(--accent)" : "1px solid rgba(128,128,128,0.18)", outlineOffset: -1 }}
               >

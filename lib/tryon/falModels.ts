@@ -37,6 +37,9 @@ export function bananaPrompt(p: PieceBrief): string {
     "Reproduce the garment's colours, weave, print, embroidery and border faithfully.",
     "If the product photo shows the garment folded, on a hanger or on a mannequin, show how it looks when worn.",
     "Keep the person's face, skin tone, hair, body shape, pose, hands and the background unchanged, with the same framing as image 1.",
+    // Models guess the colour of skin the old clothes covered and often guess lighter; anchor it to what is visible.
+    "Any skin that becomes visible (arms, hands, neck, feet) must exactly match the skin tone of the person's own face and hands in image 1, under the same lighting: never lighter, darker or a different undertone.",
+    "Keep any hijab, headscarf or other head covering exactly as it is in image 1.",
     "Return one realistic photograph.",
   ].filter(Boolean).join(" ");
 }

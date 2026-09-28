@@ -41,7 +41,7 @@ export function MoodSwitcher() {
         </motion.span>
       </header>
 
-      <footer className="flex flex-col items-center gap-4">
+      <footer className="mb-14 flex flex-col items-center gap-4 md:mb-0">
         <div
           className="pointer-events-auto flex gap-1 rounded-full p-1.5 backdrop-blur-xl shadow-lg"
           style={{ background: "var(--panel)" }}
@@ -50,7 +50,7 @@ export function MoodSwitcher() {
             <button
               key={id}
               onClick={() => setMood(id)}
-              className="relative rounded-full px-4 py-2 text-xs md:text-sm tracking-wider transition-colors"
+              className="relative rounded-full px-3 py-1.5 text-[11px] tracking-wider transition-colors md:px-4 md:py-2 md:text-sm"
               style={{ color: mood === id ? "#fff" : "var(--text)" }}
             >
               {mood === id && (

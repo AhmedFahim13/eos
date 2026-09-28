@@ -41,14 +41,14 @@ export function Stylist() {
 
   if (!open) {
     return (
-      <button onClick={() => setOpen(true)} className="pointer-events-auto absolute bottom-20 left-3 rounded-full px-4 py-2 text-xs uppercase tracking-widest shadow-lg backdrop-blur-xl md:left-6" style={panel}>
+      <button onClick={() => setOpen(true)} className="pointer-events-auto absolute bottom-36 left-3 rounded-full px-4 py-2 text-xs uppercase tracking-widest shadow-lg backdrop-blur-xl md:bottom-20 md:left-6" style={panel}>
         ✦ Style me
       </button>
     );
   }
 
   return (
-    <aside className="pointer-events-auto absolute bottom-20 left-3 w-72 rounded-2xl p-3 shadow-xl backdrop-blur-xl md:left-6" style={panel}>
+    <aside className="pointer-events-auto absolute inset-x-3 bottom-36 z-30 rounded-2xl p-3 shadow-xl backdrop-blur-xl md:inset-x-auto md:bottom-20 md:left-6 md:z-auto md:w-72" style={panel}>
       <div className="mb-2 flex items-center justify-between">
         <h2 className="font-serif text-lg">Style me</h2>
         <button onClick={() => setOpen(false)} aria-label="Close" className="opacity-50">×</button>

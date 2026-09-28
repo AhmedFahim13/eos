@@ -18,6 +18,11 @@ describe("bananaPrompt", () => {
     expect(p).toContain("replace only that garment");
     expect(p).not.toContain("keep the person's own top");
   });
+  it("anchors newly visible skin to the person's own tone and keeps head coverings", () => {
+    const p = bananaPrompt(saree);
+    expect(p).toContain("exactly match the skin tone of the person's own face and hands");
+    expect(p).toContain("hijab");
+  });
   it("keeps a kurti full length", () => {
     expect(bananaPrompt({ slot: "kurti", description: "green kurti", styles: [] })).toContain("full length");
   });
